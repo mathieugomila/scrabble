@@ -1,37 +1,67 @@
 #grid {
-    display: grid;
-    grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-    grid-gap: 10px;
-  }
-  
-  .square {
-    border: 1px solid #000;
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    background-color: rgb(255, 255, 255);
-  }
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  grid-gap: 10px;
+}
 
-  .square.white {
-    background-color: rgb(255, 255, 255);
-  }
-  
-  .square.cyan {
-    background-color: rgb(58, 220, 241);
-  }
+#grid2 {
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px;
+  grid-gap: 10px;
+}
 
-  .square.blue {
-    background-color: rgb(9, 5, 252);
-  }
+.square {
+  border: 1px solid #000;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255, 255, 255);
+}
 
-  .square.pink {
-    background-color: rgb(236, 146, 232);
-  }
+.square.white {
+  background-color: rgb(255, 255, 255);
+}
 
-  .square.red {
-    background-color: rgb(241, 3, 3);
-  }
-  
+.square.cyan {
+  background-color: rgb(58, 220, 241);
+}
+
+.square.blue {
+  background-color: rgb(9, 5, 252);
+}
+
+.square.pink {
+  background-color: rgb(236, 146, 232);
+}
+
+.square.red {
+  background-color: rgb(241, 3, 3);
+}
+
+.square.hand {
+  background-color: rgb(240, 218, 148);
+}
+
+.square.letter {
+  background-color: rgb(240, 218, 148);
+  box-shadow: 6px 6px 3px rgba(0, 0, 0, 0.9);
+  border-radius: 10%;
+  transform: rotate(3deg);
+}
+
+.square.letter.used {
+  background-color: rgba(165, 170, 170, 0.1);
+}
+
+#validateButton {
+  position: absolute;
+  top: calc(100% - 120px);
+  height: 100px;
+  left: calc(15 * 60px + 20px);
+  width: calc(100% - 940px); /* Largeur totale - (Left + MarginRight) */
+  font-size: 16px;
+  font-weight: bold;
+}

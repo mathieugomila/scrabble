@@ -35,24 +35,35 @@ for (let i = 0; i < 15; i++) {
             square.setAttribute('contenteditable', 'true');
             square.focus();
         });
-        square.addEventListener('input', function () {
-            if (square.textContent.length > 1) {
-                square.textContent = square.textContent.slice(-1);
-            }
+        square.addEventListener('input', function (e) {
             square.textContent = square.textContent.toUpperCase();
-            if (square.textContent === '') {
+            if (hand_letters.includes(square.textContent)) {
+
+                if (square.textContent.length > 1) {
+                    square.textContent = square.textContent.slice(-1);
+                }
+
+                const range = document.createRange();
+                const sel = window.getSelection();
+                if (square.childNodes.length > 0) {
+                    range.setStart(square.childNodes[0], 1);
+                }
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+
+            if (square.textContent.trim() == '' || square.textContent.length > 1) {
                 square.classList.remove('modified');
+                square.classList.remove('letter');
+                square.textContent = "";
             } else {
                 square.classList.add('modified');
+                square.classList.add('letter');
             }
-            const range = document.createRange();
-            const sel = window.getSelection();
-            if (square.childNodes.length > 0) {
-                range.setStart(square.childNodes[0], 1);
-            }
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
+
+            updateHand(e);
+
         });
         square.addEventListener('focus', function () {
             if (!square.classList.contains('non-editable')) {
@@ -68,6 +79,8 @@ for (let i = 0; i < 15; i++) {
         if (i == 2 && j == 2) {
             square.textContent = "C";
             square.classList.add('non-editable');
+            square.classList.add('letter');
+            square.contentEditable = false;
         }
 
 
@@ -95,20 +108,6 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-function getModifiedSquares() {
-    let modified_squares = document.querySelectorAll('.square.modified');
-    for (let i = 0; i < modified_squares.length; i++) {
-        const square = modified_squares[i];
-        const index = Array.from(squares).indexOf(square);
-        const content = square.textContent;
-
-        console.log(`Index: ${index}, Content: ${content}`);
-    }
-
-    console.log(`${checkAlignment()}`);
-    console.log(`${checkNoEmptyBetween()}`);
-}
-
 function checkAlignment() {
     const modifiedSquares = document.querySelectorAll('.square.modified');
     let rows = new Set();
@@ -123,9 +122,13 @@ function checkAlignment() {
         cols.add(col);
     }
 
-    console.log(`${rows} ${cols}`);
-
-    return (rows.size === 1 && cols.size >= 1) || (cols.size === 1 && rows.size >= 1);
+    if (rows.size === 1 && cols.size >= 1) {
+        return { "is_aligned": true, type: "row" };
+    }
+    if (cols.size === 1 && rows.size >= 1) {
+        return { "is_aligned": true, type: "col" };
+    }
+    return { "is_aligned": false, type: "" };
 }
 
 function checkNoEmptyBetween() {
