@@ -19,12 +19,6 @@ const colors = { ".": 'white', "3": "red", "2": "pink", "b": "cyan", "c": "blue"
 
 const grid = document.getElementById('grid');
 
-fetch('letters_score.json')
-    .then(response => response.json())
-    .then(data => {
-        const scrabble_letter_score = data;
-    });
-
 for (let i = 0; i < 15; i++) {
     for (let j = 0; j < 15; j++) {
         const square = document.createElement('div');
@@ -51,16 +45,25 @@ for (let i = 0; i < 15; i++) {
                 range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range);
+
+                square.classList.add('modified');
+                square.classList.add('letter');
+            }
+            else {
+                square.classList.remove('modified');
+                square.classList.remove('letter');
+                square.textContent = "";
             }
 
             if (square.textContent.trim() == '' || square.textContent.length > 1) {
                 square.classList.remove('modified');
                 square.classList.remove('letter');
                 square.textContent = "";
-            } else {
-                square.classList.add('modified');
-                square.classList.add('letter');
             }
+            // else {
+            //     square.classList.add('modified');
+            //     square.classList.add('letter');
+            // }
 
             updateHand(e);
 
@@ -164,14 +167,9 @@ function checkNoEmptyBetween() {
 }
 
 
-
-
-
 document.addEventListener('keydown', function (e) {
     if (e.code === 'Enter') {
         getModifiedSquares();  // Votre fonction
     }
 });
-
-
 

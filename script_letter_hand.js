@@ -1,8 +1,14 @@
 const grid2 = document.getElementById('grid2');
 
 let scrabble_letter_count = {};
-let hand_letters_base = []
-let hand_letters = []
+let scrabble_letter_score = {};
+let hand_letters_base = [];
+let hand_letters = [];
+let words_list = [];
+
+let score = 0;
+
+let error_messages = []
 
 
 async function loadData() {
@@ -62,7 +68,7 @@ function pullLetter() {
 function updateHand(e) {
     let squares = document.querySelectorAll('.square.hand');
     let hand_temp = hand_letters_base.slice();
-
+    error_messages = []
     let modified_squares = document.querySelectorAll('.square.modified');
     for (let i = 0; i < modified_squares.length; i++) {
         const square = modified_squares[i];
@@ -85,18 +91,40 @@ function updateHand(e) {
     let alignement = checkAlignment();
     let no_space = checkNoEmptyBetween();
 
-    console.log(alignement, no_space);
+    let current_score = 0;
 
 
     if (alignement["is_aligned"] && no_space) {
         if (alignement["type"] == "col") {
-            retrieveWordCol(get_modified_index(), 0);
+            current_score = retrieveWordCol(get_modified_index(), 0);
+
         }
         else {
-            retrieveWordRow(get_modified_index(), 0);
+            current_score = retrieveWordRow(get_modified_index(), 0);
         }
     }
-    //retrieveWordCol();
+    else {
+        error_messages.push("Les lettres doivent etre toutes alignées sans espace");
+    }
+
+    console.log(`Score ${current_score}`);
+    document.getElementById("validateButton").textContent = `VALIDER (SCORE = ${current_score})`;
+
+    let modifiedMessages = error_messages.map(msg => "&nbsp;&nbsp;&nbsp;&nbsp;-" + msg);
+    document.getElementById("errorText").innerHTML = "Information:<br>" + modifiedMessages.join("<br>");
+
+    document.getElementById("validateButton").addEventListener("click", async function () {
+        if (current_score > 0) {
+
+            let text = `Bravo, votre score du jour : ${current_score}`;
+            try {
+                await navigator.clipboard.writeText(text);
+                console.log('Texte copié');
+            } catch (err) {
+                console.log('Erreur, texte non copié', err);
+            }
+        }
+    });
 }
 
 function get_modified_index() {
@@ -141,18 +169,44 @@ function retrieveWordRow(pos_index, changement) {
 
     let word = ""
 
+    let other_score = 0;
+    let current_word_score = 0;
+    let current_word_multiplier = 1;
+
     for (let index_word = index_start; index_word <= index_end; index_word++) {
         word += allSquares[index_word].textContent;
 
         if (changement == 0) {
-            retrieveWordCol(index_word, 1);
+            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            current_word_score += counter_letter["score"];
+            current_word_multiplier *= counter_letter["multiplier"];
+            other_score += retrieveWordCol(index_word, 1);
+        }
+        else {
+            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            current_word_score += counter_letter["score"];
         }
     }
 
-    if (changement == 0 || (changement == 1 && length(word) > 1)) {
-
-        console.log(word);
+    if (word.length == 1) {
+        current_word_score = 0;
     }
+    else {
+
+        if (words_list.includes(word)) {
+            console.log(`${word} existe`);
+        }
+        else {
+            console.log(`${word} n'existe pas`);
+            error_messages.push(`${word} n'existe pas`);
+            current_word_score = 0;
+        }
+    }
+
+    let global_score = current_word_multiplier * current_word_score + other_score;
+
+
+    return global_score;
 }
 
 function retrieveWordCol(pos_index, changement) {
@@ -183,17 +237,95 @@ function retrieveWordCol(pos_index, changement) {
 
     let word = ""
 
+    let other_score = 0;
+    let current_word_score = 0;
+    let current_word_multiplier = 1;
+
     for (let index_word = index_start; index_word <= index_end; index_word += 15) {
         word += allSquares[index_word].textContent;
 
         if (changement == 0) {
-            retrieveWordRow(index_word, 1);
+            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            current_word_score += counter_letter["score"];
+            current_word_multiplier *= counter_letter["multiplier"];
+            other_score += retrieveWordRow(index_word, 1);
+        }
+        else {
+            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            current_word_score += counter_letter["score"];
+        }
+    }
+    if (word.length == 1) {
+        current_word_score = 0;
+    }
+    else {
+
+        if (words_list.includes(word)) {
+            console.log(`${word} existe`);
+        }
+        else {
+            console.log(`${word} n'existe pas`);
+            error_messages.push(`${word} n'existe pas`);
+            current_word_score = 0;
         }
     }
 
-    if (changement == 0 || (changement == 1 && word.length > 1)) {
-        console.log(word);
+    let global_score = current_word_multiplier * current_word_score + other_score;
+
+    return global_score;
+}
+
+async function readDataScore() {
+    const response = await fetch('letters_score.json');
+    const data = await response.json();
+    return data;
+}
+
+async function loadLetterScore() {
+    scrabble_letter_score = await readDataScore();
+}
+
+function count_letter(letter, index) {
+    let multiplier = 1;
+    let global_multiplier = 1;
+    if (pattern[index] == "2") {
+        global_multiplier = 2;
     }
+    if (pattern[index] == "3") {
+        global_multiplier = 3;
+    }
+    if (pattern[index] == "b") {
+        multiplier = 2;
+    }
+    if (pattern[index] == "c") {
+        multiplier = 3;
+    }
+
+
+    const allSquares = document.querySelectorAll('.square');
+    if (!allSquares[index].classList.contains('modified')) {
+        multiplier = 1;
+        global_multiplier = 1;
+    }
+
+
+    console.log(letter, global_multiplier, multiplier, scrabble_letter_score[letter]);
+
+    // get value for current letter
+    return { "multiplier": global_multiplier, "score": multiplier * scrabble_letter_score[letter] };
+}
+
+async function readWordsList() {
+    const response = await fetch('ods6.txt');
+    const data = await response.text();
+    const words = data.split('\n');
+    return words;
+}
+
+async function loadWordsList() {
+    words_list = await readWordsList();
 }
 
 main();
+loadLetterScore();
+loadWordsList()
