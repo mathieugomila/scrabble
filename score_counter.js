@@ -113,6 +113,7 @@ function retrieveWordRow(pos_index, changement, orientation) {
     let current_word_score = 0;
     let current_word_multiplier = 1;
 
+    let is_current_word_modified = false;
     for (let index_word = index_start; index_word <= index_end; index_word++) {
         word += allSquares[index_word].textContent;
 
@@ -123,12 +124,16 @@ function retrieveWordRow(pos_index, changement, orientation) {
             other_score += retrieveWordCol(index_word, 1);
         }
         else {
+
             let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
             current_word_score += counter_letter["score"];
         }
+        if (allSquares[index_word].classList.contains('modified')) {
+            is_current_word_modified = true
+        }
     }
 
-    if (word.length == 1) {
+    if (word.length == 1 || !is_current_word_modified) {
         current_word_score = 0;
     }
     else {
@@ -181,6 +186,7 @@ function retrieveWordCol(pos_index, changement) {
     let current_word_score = 0;
     let current_word_multiplier = 1;
 
+    let is_current_word_modified = false;
     for (let index_word = index_start; index_word <= index_end; index_word += 15) {
         word += allSquares[index_word].textContent;
 
@@ -191,11 +197,15 @@ function retrieveWordCol(pos_index, changement) {
             other_score += retrieveWordRow(index_word, 1);
         }
         else {
+
             let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
             current_word_score += counter_letter["score"];
         }
+        if (allSquares[index_word].classList.contains('modified')) {
+            is_current_word_modified = true
+        }
     }
-    if (word.length == 1) {
+    if (word.length == 1 || !is_current_word_modified) {
         current_word_score = 0;
     }
     else {

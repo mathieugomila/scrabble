@@ -1,5 +1,6 @@
 import random
 import json
+import os
 
 from itertools import permutations
 
@@ -30,6 +31,10 @@ def pull_letters(letters):
     for _ in range(0, 7):
         pulled_letters += pull_letter(letters)
     return pulled_letters
+
+def push_letters(hand_letter, letters):
+    for letter in hand_letter:
+        letters[letter] += 1
 
 def check_word_empty(word, grid, x, y, orientation):
     for i in range(len(word)):
@@ -72,7 +77,7 @@ def find_words(letters, valid_words):
     return found_words
 
 
-def place_word_around_letter(letters, grid, x, y, available_words):
+def place_word_around_letter(letters, grid, x, y, available_words, all_leters):
     if grid[x][y] == " ":
         return False
     letters_with_letter = letters + grid[x][y]
@@ -89,7 +94,7 @@ def place_word_around_letter(letters, grid, x, y, available_words):
                 index_letter_already_here = possible_word.index(grid[x][y])
                 word_is_ok = True
 
-                if len(possible_word) < 4:
+                if len(possible_word) < 5:
                     continue
 
                 if x - index_letter_already_here < 0 or x - index_letter_already_here + len(possible_word) > 15:
@@ -106,6 +111,8 @@ def place_word_around_letter(letters, grid, x, y, available_words):
                         word_is_ok = False
                 if word_is_ok:
                     place_word(possible_word, grid, x-index_letter_already_here, y, "vertical")
+                    remaining_letters = ''.join(filter(lambda x: x not in possible_word, letters))
+                    push_letters(remaining_letters, all_leters)
                     return True
     print("horizontal")
     for possible_word in sorted_set:
@@ -113,7 +120,7 @@ def place_word_around_letter(letters, grid, x, y, available_words):
             index_letter_already_here = possible_word.index(grid[x][y])
             word_is_ok = True
 
-            if len(possible_word) < 4:
+            if len(possible_word) < 5:
                 continue
 
             if y - index_letter_already_here < 0 or y - index_letter_already_here + len(possible_word) > 15:
@@ -131,39 +138,67 @@ def place_word_around_letter(letters, grid, x, y, available_words):
                     word_is_ok = False
             if word_is_ok:
                 place_word(possible_word, grid, x, y-index_letter_already_here, "horizontal")
+                remaining_letters = ''.join(filter(lambda x: x not in possible_word, letters))
+                push_letters(remaining_letters, all_leters)
                 return True
     return False
 
 
-def place_random_word(letters, grid, available_words):
+def place_random_word(letters, grid, available_words, all_leters):
     for i in range(0, 15):
         for j in range(0, 15):
-            result = place_word_around_letter(letters, grid, i, j, available_words)
+            result = place_word_around_letter(letters, grid, i, j, available_words, all_leters)
             if result == True:
                 return
 
 
 if __name__ == "__main__":
-    available_words = load_words("liste_francais.txt")  # Mettez votre propre chemin de fichier ici
-    all_letters = load_letters("letters_count.json")
-    grid = generate_grid()
+    while True:
+        available_words = load_words("liste_francais.txt")  # Mettez votre propre chemin de fichier ici
+        all_letters = load_letters("letters_count.json")
+        grid = generate_grid()
 
-    pulled_letters = pull_letters(all_letters)
-    print(pulled_letters)
-    all_words = find_words(pulled_letters, available_words)
-
-    print("all words", all_words)
-
-    longest_word = max(all_words, key=len)
-    place_word(longest_word, grid, 7, 7, "horizontal")
-    print_grid(grid)
-
-    for i in range(0, 30):
         pulled_letters = pull_letters(all_letters)
         print(pulled_letters)
-        place_random_word(pulled_letters, grid, available_words)
+        all_words = find_words(pulled_letters, available_words)
+
+        print("all words", all_words)
+
+        longest_word = max(all_words, key=len)
+        place_word(longest_word, grid, 7, 7, "horizontal")
         print_grid(grid)
 
+        for i in range(0, 30):
+            print(f"step{i}")
+            pulled_letters = pull_letters(all_letters)
+            print(pulled_letters)
+            place_random_word(pulled_letters, grid, available_words, all_letters)
+            print_grid(grid)
+
+        grid_str = ''.join([''.join(sublist) for sublist in grid])
+        grid_str = grid_str.replace(" ", ".")
+        condition_letters = False
+        last_pulled_letters = [letter for letter in pull_letters(all_letters)]
+        while not condition_letters:
+            vowels = set("AEIOUY")
+            consonants = set("BCDFGHJKLMNPQRSTVWXZ")
+
+            count_vowels = sum(1 for char in last_pulled_letters if char.upper() in vowels)
+            count_consonants = sum(1 for char in last_pulled_letters if char.upper() in consonants)
+
+            if count_vowels >= 2 and count_consonants >= 2:
+                condition_letters = True
+            else:
+                print("letters not following condition", last_pulled_letters)
+                push_letters(last_pulled_letters, all_letters)
+                last_pulled_letters = [letter for letter in pull_letters(all_letters)]
+        
+        export_json = {"grid": grid_str, "hand": last_pulled_letters}
+        print(export_json)
+
+        num_files = len([f for f in os.listdir("days") if os.path.isfile(os.path.join("days", f))])
+        with open(f"days/grid_{num_files}.json", "w") as f:
+            json.dump(export_json, f)
 
     #grid = generate_grid(words)
     #print_grid(grid)

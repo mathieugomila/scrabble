@@ -28,10 +28,11 @@ function load_button() {
         if (current_score > 0) {
 
             console.log(current_score)
-            let text = `Bravo, votre score du jour : ${current_score}\n Venez jouer sur scrabble.pheargame.net`;
+            let text = `#SCRABBLEBLE jour n°${day_counter()} \nScore: ${current_score}\n\nhttps://scrabble.pheargame.net`;
             try {
                 await navigator.clipboard.writeText(text);
                 console.log('Texte copié');
+                document.getElementById("validateButton").textContent = `Score copié dans le presse-papier`;
             } catch (err) {
                 console.log('Erreur, texte non copié', err);
             }

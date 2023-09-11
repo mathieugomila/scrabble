@@ -1,5 +1,6 @@
 daily_grid = ''
 daily_hand = []
+day_counter = 0
 
 function searchDayIndex() {
     const now = new Date();
@@ -47,6 +48,7 @@ async function main() {
     let daily_grid_json = await loadDailyGrid();
     daily_grid = daily_grid_json["grid"];
     daily_hand = daily_grid_json["hand"]
+    day_counter = searchDayIndex;
     create_grid()
 }
 
