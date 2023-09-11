@@ -4,6 +4,7 @@ let scrabble_letter_count = {};
 let scrabble_letter_score = {};
 let hand_letters_base = [];
 let hand_letters = [];
+let letter_modified = []
 let words_list = [];
 
 let score = 0;
@@ -67,20 +68,20 @@ function pullLetter() {
 
 function updateHand(e) {
     let squares = document.querySelectorAll('.square.hand');
-    let hand_temp = hand_letters_base.slice();
+    letter_modified = hand_letters_base.slice();
     error_messages = []
     let modified_squares = document.querySelectorAll('.square.modified');
     for (let i = 0; i < modified_squares.length; i++) {
         const square = modified_squares[i];
-        let index = hand_temp.indexOf(square.textContent);
+        let index = letter_modified.indexOf(square.textContent);
 
         if (index !== -1) {
 
-            hand_temp[index] = ".";
+            letter_modified[index] = ".";
         }
     }
     for (let i = 0; i < 7; i++) {
-        if (hand_temp[i] == ".") {
+        if (letter_modified[i] == ".") {
             squares[i].classList.add('used');
         }
         else {
