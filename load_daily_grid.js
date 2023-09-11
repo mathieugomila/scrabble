@@ -18,6 +18,7 @@ async function loadDailyGrid() {
 }
 
 function create_grid() {
+    getSevenLetters();
     for (let i = 0; i < 15; i++) {
         for (let j = 0; j < 15; j++) {
             const square = document.createElement('div');

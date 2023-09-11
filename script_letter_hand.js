@@ -43,15 +43,14 @@ async function loadWordsList() {
 
 async function main() {
     scrabble_letter_count = await loadLetterCount();
-    pullSevenLetters();
 }
 
 
 main();
 loadLetterScore();
-loadWordsList()
+loadWordsList();
 
-function pullSevenLetters() {
+function getSevenLetters() {
     for (let i = 0; i < 7; i++) {
         const square = document.createElement('div');
         square.className = `square hand`;
