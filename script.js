@@ -15,104 +15,70 @@ b..2...b...2..b
 .2...c...c...2.
 3..b...3...b..3`.trim().replace(/\n/g, '');;
 
-const default_grid =
-    `........AMICAL.
-.........E.....
-.........N.S...
-........GUEUSE.
-.....SEAU..B.N.
-..VISA..I..I.N.
-.....G..D..R.U.
-.....E.OEIL..I.
-...............
-...............
-...............
-...............
-...............
-...............
-...............`.trim().replace(/\n/g, '');
-
 
 const colors = { ".": 'white', "3": "red", "2": "pink", "b": "cyan", "c": "blue" };
 
-
 const grid = document.getElementById('grid');
 
-for (let i = 0; i < 15; i++) {
-    for (let j = 0; j < 15; j++) {
-        const square = document.createElement('div');
-        const color = colors[pattern[j + 15 * i]];
-        square.className = `square ${color}`;
-        square.setAttribute('tabindex', '0');
-        square.addEventListener('click', function () {
-            if (square.classList.contains('modified')) {
-                square.classList.remove('modified');
-                square.classList.remove('letter');
-                square.textContent = "";
+load_button();
+
+
+function load_button() {
+    document.getElementById("validateButton").addEventListener("click", async function () {
+        if (current_score > 0) {
+
+            console.log(current_score)
+            let text = `Bravo, votre score du jour : ${current_score}\n Venez jouer sur scrabble.pheargame.net`;
+            try {
+                await navigator.clipboard.writeText(text);
+                console.log('Texte copié');
+            } catch (err) {
+                console.log('Erreur, texte non copié', err);
             }
-            //square.setAttribute('contenteditable', 'true');
-            square.focus();
-        });
-        square.addEventListener('input', function (e) {
-            square.textContent = square.textContent.toUpperCase();
-            if (letter_modified.includes(square.textContent)) {
+        }
+    });
+}
 
-                if (square.textContent.length > 1) {
-                    square.textContent = square.textContent.slice(-1);
-                }
+function square_input(square) {
+    square.textContent = square.textContent.toUpperCase();
+    if (letter_modified.includes(square.textContent)) {
 
-                const range = document.createRange();
-                const sel = window.getSelection();
-                if (square.childNodes.length > 0) {
-                    range.setStart(square.childNodes[0], 1);
-                }
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-
-                square.classList.add('modified');
-                square.classList.add('letter');
-            }
-            else {
-                square.classList.remove('modified');
-                square.classList.remove('letter');
-                square.textContent = "";
-            }
-
-            if (square.textContent.trim() == '' || square.textContent.length > 1) {
-                square.classList.remove('modified');
-                square.classList.remove('letter');
-                square.textContent = "";
-            }
-            // else {
-            //     square.classList.add('modified');
-            //     square.classList.add('letter');
-            // }
-
-            updateHand(e);
-
-        });
-        square.addEventListener('focus', function () {
-            if (!square.classList.contains('non-editable')) {
-                square.setAttribute('contenteditable', 'true');
-            }
-        });
-
-        square.addEventListener('blur', function () {
-            square.removeAttribute('contenteditable');
-        });
-
-
-        if (default_grid[i * 15 + j] != ".") {
-            square.textContent = default_grid[i * 15 + j];
-            square.classList.add('non-editable');
-            square.classList.add('letter');
-            square.contentEditable = false;
+        if (square.textContent.length > 1) {
+            square.textContent = square.textContent.slice(-1);
         }
 
+        const range = document.createRange();
+        const sel = window.getSelection();
+        if (square.childNodes.length > 0) {
+            range.setStart(square.childNodes[0], 1);
+        }
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
 
-        grid.appendChild(square);
+        square.classList.add('modified');
+        square.classList.add('letter');
     }
+    else {
+        square.classList.remove('modified');
+        square.classList.remove('letter');
+        square.textContent = "";
+    }
+
+    if (square.textContent.trim() == '' || square.textContent.length > 1) {
+        square.classList.remove('modified');
+        square.classList.remove('letter');
+        square.textContent = "";
+    }
+}
+
+function square_click(square) {
+    if (square.classList.contains('modified')) {
+        square.classList.remove('modified');
+        square.classList.remove('letter');
+        square.textContent = "";
+    }
+    square.focus();
 }
 
 let squares = document.querySelectorAll('.square');
@@ -135,60 +101,17 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-function checkAlignment() {
-    const modifiedSquares = document.querySelectorAll('.square.modified');
-    let rows = new Set();
-    let cols = new Set();
-
-    for (let i = 0; i < modifiedSquares.length; i++) {
-        const index = Array.from(squares).indexOf(modifiedSquares[i]);
-        const row = Math.floor(index / 15);
-        const col = index % 15;
-
-        rows.add(row);
-        cols.add(col);
+function set_base_letters(square, i, j) {
+    if (daily_grid[i * 15 + j] != ".") {
+        square.textContent = daily_grid[i * 15 + j];
+        square.classList.add('non-editable');
+        square.classList.add('default');
+        square.classList.add('letter');
+        square.contentEditable = false;
+        square.removeAttribute('contenteditable');
     }
-
-    if (rows.size === 1 && cols.size >= 1) {
-        return { "is_aligned": true, type: "row" };
-    }
-    if (cols.size === 1 && rows.size >= 1) {
-        return { "is_aligned": true, type: "col" };
-    }
-    return { "is_aligned": false, type: "" };
 }
 
-function checkNoEmptyBetween() {
-    const modifiedSquares = document.querySelectorAll('.square.modified');
-    let minRow = 15, maxRow = -1, minCol = 15, maxCol = -1;
-
-    for (let i = 0; i < modifiedSquares.length; i++) {
-        const index = Array.from(squares).indexOf(modifiedSquares[i]);
-        const row = Math.floor(index / 15);
-        const col = index % 15;
-
-        minRow = Math.min(minRow, row);
-        maxRow = Math.max(maxRow, row);
-        minCol = Math.min(minCol, col);
-        maxCol = Math.max(maxCol, col);
-    }
-
-    if (maxRow - minRow > 0 && maxCol - minCol > 0) {
-        return false; // Diagonal, invalide
-    }
-
-    for (let row = minRow; row <= maxRow; row++) {
-        for (let col = minCol; col <= maxCol; col++) {
-            const index = row * 15 + col;
-            const square = squares[index];
-            if (!square.classList.contains('modified') && square.textContent === '') {
-                return false; // Case vide trouvée
-            }
-        }
-    }
-
-    return true;
-}
 
 
 document.addEventListener('keydown', function (e) {

@@ -52,6 +52,10 @@
   transform: rotate(3deg);
 }
 
+.square.default {
+  background-color: rgb(192, 176, 120);
+}
+
 .square.letter.used {
   background-color: rgba(165, 170, 170, 0.1);
 }
