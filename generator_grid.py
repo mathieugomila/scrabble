@@ -45,7 +45,11 @@ def push_letters(hand_letter, letters):
 
 
 def count_letter(all_letters):
-    return len([[letter] * freq for letter, freq in all_letters.items() if freq > 0])
+    letters_decomposed = [
+        [letter] * freq for letter, freq in all_letters.items() if freq > 0
+    ]
+    flatten_list = [item for sublist in letters_decomposed for item in sublist]
+    return len(flatten_list)
 
 
 def check_word_empty(word, grid, x, y, orientation):

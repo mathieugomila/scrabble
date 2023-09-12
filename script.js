@@ -92,13 +92,19 @@ function square_input(square, e) {
     else {
         square.classList.remove('modified');
         square.classList.remove('letter');
+        let all_squares = document.querySelectorAll('.square');
+        let index = Array.from(all_squares).indexOf(square);
         square.textContent = "";
+        addCaseIndication(square, pattern[index]);
     }
 
     if (square.classList.contains("letters") && (firstChild.nodeValue.trim() == '' || square.firstChild.nodeValue.length > 1)) {
         square.classList.remove('modified');
         square.classList.remove('letter');
+        let all_squares = document.querySelectorAll('.square');
+        let index = Array.from(all_squares).indexOf(square);
         square.textContent = "";
+        addCaseIndication(square, pattern[index]);
     }
 
 
@@ -108,7 +114,10 @@ function square_click(square) {
     if (square.classList.contains('modified')) {
         square.classList.remove('modified');
         square.classList.remove('letter');
+        let all_squares = document.querySelectorAll('.square');
+        let index = Array.from(all_squares).indexOf(square);
         square.textContent = "";
+        addCaseIndication(square, pattern[index]);
     }
     square.focus();
 }
