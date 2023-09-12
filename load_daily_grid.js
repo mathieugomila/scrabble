@@ -17,7 +17,7 @@ async function loadDailyGrid() {
     return data;
 }
 
-function create_grid() {
+async function create_grid() {
     getSevenLetters();
     for (let i = 0; i < 15; i++) {
         for (let j = 0; j < 15; j++) {
@@ -51,6 +51,8 @@ function create_grid() {
             grid.appendChild(square);
         }
     }
+    await loadLetterCount();
+    update_letter_score();
 }
 
 async function main() {

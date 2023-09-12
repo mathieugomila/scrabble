@@ -50,7 +50,7 @@ main();
 loadLetterScore();
 loadWordsList();
 
-function getSevenLetters() {
+async function getSevenLetters() {
     for (let i = 0; i < 7; i++) {
         const square = document.createElement('div');
         square.className = `square hand`;
@@ -68,6 +68,9 @@ function getSevenLetters() {
         square.setAttribute("draggable", "true");
         square.id = `draggableItem_${i}`;
     }
+
+    await loadLetterCount();
+    update_letter_score();
 }
 
 function pullOneLetter() {

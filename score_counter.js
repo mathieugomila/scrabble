@@ -88,7 +88,7 @@ function count_letter(letter, index) {
     return { "multiplier": global_multiplier, "score": multiplier * scrabble_letter_score[letter] };
 }
 
-function retrieveWordRow(pos_index, changement, orientation) {
+function retrieveWordRow(pos_index, changement) {
     row = Math.floor(pos_index / 15);
 
     let index_start = pos_index;

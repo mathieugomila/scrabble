@@ -150,11 +150,6 @@ function update_letter_score() {
             }
 
         }
-        // else {
-        //     if (squares[i].querySelector('score')) {
-        //         squares[i].children[0].textContent = "";
-        //     }
-        // }
     }
 }
 
