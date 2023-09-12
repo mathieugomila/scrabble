@@ -65,6 +65,8 @@ function getSevenLetters() {
         square.textContent = daily_hand[i];
         square.classList.add('non-editable');
         square.classList.add('letter');
+        square.setAttribute("draggable", "true");
+        square.id = `draggableItem_${i}`;
     }
 }
 
@@ -77,7 +79,6 @@ function pullOneLetter() {
         }
     }
 
-    //console.log(`${scrabble_letter_count}`);
     if (pool.length === 0) return null;
 
     let randomIndex = Math.floor(Math.random() * pool.length);
@@ -114,3 +115,22 @@ function updateHand() {
         }
     }
 }
+
+document.addEventListener("dragstart", function (event) {
+    event.dataTransfer.setData("DraggedItem", event.target.id);
+});
+
+document.addEventListener("dragover", function (event) {
+    event.preventDefault();
+});
+
+document.addEventListener("drop", function (event) {
+    let droppedElement = document.getElementById(event.dataTransfer.getData('DraggedItem'));
+    drop_letter = droppedElement.firstChild.nodeValue;
+    let targetElement = event.target;
+    square_add_modified_letter(targetElement, drop_letter);
+    updateHand();
+    checkGridAndCalculateScore();
+    update_letter_score();
+
+});

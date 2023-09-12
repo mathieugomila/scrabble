@@ -8,6 +8,10 @@ from unidecode import unidecode
 
 import random
 
+import time
+
+start_time = time.time()
+
 
 def load_words(file_path):
     with open(file_path, "r") as f:
@@ -233,7 +237,12 @@ if __name__ == "__main__":
         place_word(longest_word, grid, 7, 7, "horizontal")
         print_grid(grid)
 
-        for i in range(0, 60):
+        for i in range(0, 25):
+            elapsed_time = time.time() - start_time
+
+            if elapsed_time > 3600:
+                break
+
             print(f"step{i}")
             pulled_letters = pull_letters(all_letters)
             print(pulled_letters)

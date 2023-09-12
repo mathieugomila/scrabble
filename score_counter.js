@@ -30,7 +30,10 @@ function checkGridAndCalculateScore() {
         current_score += 50;
     }
 
-    console.log(`Score ${current_score}`);
+    if (error_messages.length > 0) {
+        current_score = 0;
+    }
+
     if (current_score > 0) {
         document.getElementById("validateButton").firstChild.nodeValue = `VALIDER (SCORE = ${current_score})`;
     }
@@ -39,7 +42,7 @@ function checkGridAndCalculateScore() {
     }
 
     let modifiedMessages = error_messages.map(msg => "&nbsp;&nbsp;&nbsp;&nbsp;-" + msg);
-    document.getElementById("errorText").innerHTML = "<u>Information :<u><br>" + modifiedMessages.join("<br>");
+    document.getElementById("errorText").innerHTML = "<u>Information :</u><br>" + modifiedMessages.join("<br>");
 }
 
 function getModifiedIndex() {
@@ -142,11 +145,7 @@ function retrieveWordRow(pos_index, changement, orientation) {
     }
     else {
 
-        if (words_list.includes(word)) {
-            console.log(`${word} existe`);
-        }
-        else {
-            console.log(`${word} n'existe pas`);
+        if (!words_list.includes(word)) {
             error_messages.push(`${word} n'existe pas`);
             current_word_score = 0;
         }
@@ -214,11 +213,7 @@ function retrieveWordCol(pos_index, changement) {
     }
     else {
 
-        if (words_list.includes(word)) {
-            console.log(`${word} existe`);
-        }
-        else {
-            console.log(`${word} n'existe pas`);
+        if (!words_list.includes(word)) {
             error_messages.push(`${word} n'existe pas`);
             current_word_score = 0;
         }
