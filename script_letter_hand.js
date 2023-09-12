@@ -131,9 +131,11 @@ document.addEventListener("drop", function (event) {
     let droppedElement = document.getElementById(event.dataTransfer.getData('DraggedItem'));
     drop_letter = droppedElement.firstChild.nodeValue;
     let targetElement = event.target;
-    square_add_modified_letter(targetElement, drop_letter);
-    updateHand();
-    checkGridAndCalculateScore();
-    update_letter_score();
+    if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square")) {
+        square_add_modified_letter(targetElement, drop_letter);
+        updateHand();
+        checkGridAndCalculateScore();
+        update_letter_score();
+    }
 
 });
