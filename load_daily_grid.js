@@ -17,12 +17,28 @@ async function loadDailyGrid() {
     return data;
 }
 
+function addCaseIndication(square, case_pattern) {
+    if (case_pattern == "2") {
+        square.textContent = `MOT\nDOUBLE`;
+    }
+    else if (case_pattern == "3") {
+        square.textContent = "MOT\nTRIPLE";
+    }
+    else if (case_pattern == "b") {
+        square.textContent = "LETTRE\nDOUBLE";
+    }
+    else if (case_pattern == "c") {
+        square.textContent = "LETTRE\nTRIPLE";
+    }
+}
+
 async function create_grid() {
     getSevenLetters();
     for (let i = 0; i < 15; i++) {
         for (let j = 0; j < 15; j++) {
             const square = document.createElement('div');
             const color = colors[pattern[j + 15 * i]];
+            addCaseIndication(square, pattern[j + 15 * i]);
             square.className = `square ${color}`;
             square.setAttribute('tabindex', '0');
             square.setAttribute('contenteditable', 'true');

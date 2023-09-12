@@ -75,7 +75,7 @@ function checkWorldNextToOther(squares) {
         if (min_index > 0 && allSquares[Array.from(rows)[0] * 15 + min_index - 1].classList.contains('non-editable')) {
             return true;
         }
-        if (min_index < 14 && allSquares[Array.from(rows)[0] * 15 + max_index + 1].classList.contains('non-editable')) {
+        if (max_index < 14 && allSquares[Array.from(rows)[0] * 15 + max_index + 1].classList.contains('non-editable')) {
             return true;
         }
         for (let i = min_index; i <= max_index; i++) {
@@ -98,7 +98,7 @@ function checkWorldNextToOther(squares) {
         if (min_index > 0 && allSquares[min_index * 15 + Array.from(cols)[0] - 1].classList.contains('non-editable')) {
             return true;
         }
-        if (min_index < 14 && allSquares[max_index * 15 + Array.from(cols)[0] + 1].classList.contains('non-editable')) {
+        if (max_index < 14 && allSquares[(max_index + 1) * 15 + Array.from(cols)[0]].classList.contains('non-editable')) {
             return true;
         }
         for (let i = min_index; i <= max_index; i++) {

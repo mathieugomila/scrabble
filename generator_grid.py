@@ -10,8 +10,6 @@ import random
 
 import time
 
-start_time = time.time()
-
 
 def load_words(file_path):
     with open(file_path, "r") as f:
@@ -38,7 +36,7 @@ def pull_letters(letters):
     pulled_letters = ""
     for _ in range(0, 7):
         pulled_letters += pull_letter(letters)
-    return pulled_letters
+    return pulled_letters, letters
 
 
 def push_letters(hand_letter, letters):
@@ -111,7 +109,7 @@ def place_word_around_letter(letters, grid, x, y, available_words, all_leters):
                 index_letter_already_here = possible_word.index(grid[x][y])
                 word_is_ok = True
 
-                if len(possible_word) < 5:
+                if len(possible_word) < 4:
                     continue
 
                 if (
@@ -165,7 +163,7 @@ def place_word_around_letter(letters, grid, x, y, available_words, all_leters):
             index_letter_already_here = possible_word.index(grid[x][y])
             word_is_ok = True
 
-            if len(possible_word) < 5:
+            if len(possible_word) < 4:
                 continue
 
             if (
@@ -221,13 +219,15 @@ def place_random_word(letters, grid, available_words, all_leters):
 
 if __name__ == "__main__":
     while True:
+        start_time = time.time()
+
         available_words = load_words(
             "liste_francais.txt"
         )  # Mettez votre propre chemin de fichier ici
         all_letters = load_letters("letters_count.json")
         grid = generate_grid()
 
-        pulled_letters = pull_letters(all_letters)
+        pulled_letters, all_letters = pull_letters(all_letters)
         print(pulled_letters)
         all_words = find_words(pulled_letters, available_words)
 
@@ -244,17 +244,19 @@ if __name__ == "__main__":
                 break
 
             print(f"step{i}")
-            pulled_letters = pull_letters(all_letters)
+            pulled_letters, all_letters = pull_letters(all_letters)
             print(pulled_letters)
             place_random_word(pulled_letters, grid, available_words, all_letters)
             print_grid(grid)
             if count_letter(all_letters) < 25:
+                print("il ne reste plus assez de lettres", all_letters)
                 break
 
         grid_str = "".join(["".join(sublist) for sublist in grid])
         grid_str = grid_str.replace(" ", ".")
         condition_letters = False
-        last_pulled_letters = [letter for letter in pull_letters(all_letters)]
+        end_letter, all_leters = pull_letters(all_letters)
+        last_pulled_letters = [letter for letter in end_letter]
         limit = 100
         while not condition_letters and limit > 0:
             limit -= 1
@@ -273,7 +275,8 @@ if __name__ == "__main__":
             else:
                 print("letters not following condition", last_pulled_letters)
                 push_letters(last_pulled_letters, all_letters)
-                last_pulled_letters = [letter for letter in pull_letters(all_letters)]
+                end_letter, all_leters = pull_letters(all_letters)
+                last_pulled_letters = [letter for letter in end_letter]
 
         if limit > 0:
             export_json = {"grid": grid_str, "hand": last_pulled_letters}
@@ -288,6 +291,3 @@ if __name__ == "__main__":
             )
             with open(f"days/grid_{num_files}.json", "w") as f:
                 json.dump(export_json, f)
-
-    # grid = generate_grid(words)
-    # print_grid(grid)
