@@ -52,12 +52,19 @@
   transform: rotate(3deg);
 }
 
-.square.default {
-  background-color: rgb(192, 176, 120);
+.score {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  font-size: 16px;
 }
 
 .square.letter.used {
   background-color: rgba(165, 170, 170, 0.1);
+}
+
+.square.default {
+  background-color: rgb(192, 176, 120);
 }
 
 #validateButton {

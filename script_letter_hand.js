@@ -65,7 +65,6 @@ function getSevenLetters() {
         square.textContent = daily_hand[i];
         square.classList.add('non-editable');
         square.classList.add('letter');
-
     }
 }
 
@@ -99,7 +98,7 @@ function updateHand() {
     let modified_squares = document.querySelectorAll('.square.modified');
     for (let i = 0; i < modified_squares.length; i++) {
         const square = modified_squares[i];
-        let index = letter_modified.indexOf(square.textContent);
+        let index = letter_modified.indexOf(square.firstChild.nodeValue);
 
         if (index !== -1) {
 

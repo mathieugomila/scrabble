@@ -26,16 +26,20 @@ function checkGridAndCalculateScore() {
         }
     }
 
+    if (hand_letters.every(el => el === ".")) {
+        current_score += 50;
+    }
+
     console.log(`Score ${current_score}`);
     if (current_score > 0) {
-        document.getElementById("validateButton").textContent = `VALIDER (SCORE = ${current_score})`;
+        document.getElementById("validateButton").firstChild.nodeValue = `VALIDER (SCORE = ${current_score})`;
     }
     else {
-        document.getElementById("validateButton").textContent = "Positionnez vos lettres"
+        document.getElementById("validateButton").firstChild.nodeValue = "Positionnez vos lettres"
     }
 
     let modifiedMessages = error_messages.map(msg => "&nbsp;&nbsp;&nbsp;&nbsp;-" + msg);
-    document.getElementById("errorText").innerHTML = "Information:<br>" + modifiedMessages.join("<br>");
+    document.getElementById("errorText").innerHTML = "<u>Information :<u><br>" + modifiedMessages.join("<br>");
 }
 
 function getModifiedIndex() {
@@ -115,17 +119,17 @@ function retrieveWordRow(pos_index, changement, orientation) {
 
     let is_current_word_modified = false;
     for (let index_word = index_start; index_word <= index_end; index_word++) {
-        word += allSquares[index_word].textContent;
+        word += allSquares[index_word].firstChild.nodeValue;
 
         if (changement == 0) {
-            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            let counter_letter = count_letter(allSquares[index_word].firstChild.nodeValue, index_word);
             current_word_score += counter_letter["score"];
             current_word_multiplier *= counter_letter["multiplier"];
             other_score += retrieveWordCol(index_word, 1);
         }
         else {
 
-            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            let counter_letter = count_letter(allSquares[index_word].firstChild.nodeValue, index_word);
             current_word_score += counter_letter["score"];
         }
         if (allSquares[index_word].classList.contains('modified')) {
@@ -188,17 +192,17 @@ function retrieveWordCol(pos_index, changement) {
 
     let is_current_word_modified = false;
     for (let index_word = index_start; index_word <= index_end; index_word += 15) {
-        word += allSquares[index_word].textContent;
+        word += allSquares[index_word].firstChild.nodeValue;
 
         if (changement == 0) {
-            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            let counter_letter = count_letter(allSquares[index_word].firstChild.nodeValue, index_word);
             current_word_score += counter_letter["score"];
             current_word_multiplier *= counter_letter["multiplier"];
             other_score += retrieveWordRow(index_word, 1);
         }
         else {
 
-            let counter_letter = count_letter(allSquares[index_word].textContent, index_word);
+            let counter_letter = count_letter(allSquares[index_word].firstChild.nodeValue, index_word);
             current_word_score += counter_letter["score"];
         }
         if (allSquares[index_word].classList.contains('modified')) {

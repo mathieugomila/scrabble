@@ -30,12 +30,20 @@ function create_grid() {
                 square_click(square);
                 updateHand();
                 checkGridAndCalculateScore();
+                square.focus();
+                update_letter_score();
             });
-            square.addEventListener('input', function () {
-                square_input(square);
+            square.addEventListener('input', function (e) {
+                square_input(square, e);
                 updateHand();
                 checkGridAndCalculateScore();
+                update_letter_score();
+            });
 
+            square.addEventListener('focus', function () {
+                if (!square.classList.contains('non-editable')) {
+                    square.setAttribute('contenteditable', 'true');
+                }
             });
 
             set_base_letters(square, i, j);

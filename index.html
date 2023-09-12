@@ -2,7 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Grille 3x3</title>
+    <title>Scrabbleble</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta charset="UTF-8" />
   </head>
@@ -13,8 +13,29 @@
       style="position: absolute; bottom: 150px; left: 950px"
     ></div>
     <button id="validateButton">Positionnez vos lettres</button>
-    <p id="errorText" style="position: absolute; top: 0px; left: 950px">
-      Information :
+    <p id="errorText" style="position: absolute; top: 450px; left: 950px">
+      <u>Information :</u>
+    </p>
+    <p
+      id="errorText"
+      style="position: absolute; top: 0; left: 950px; right: 50px"
+    >
+      <u>Explications :</u> <br /><br />
+      Chaque jour, une nouvelle grille est générée aléatoirement <br /><br />
+
+      Vous ne jouez qu'un seul tour d'une partie de scrabble déjà commencée<br /><br />
+
+      L'objectif est d'obtenir le meilleur score <br /><br />
+
+      Pour le nouveau mot formé, les points sont calculés en fonction des scores
+      inscrits sur les cases. Les cases roses et rouges multiplient par 2 et 3
+      le total de point du mot. Les cases cyans et bleus multiplient la lettre
+      posée par dessus par deux ou trois. Ces effets peuvent se combiner
+      <br /><br />
+
+      Chaque mot déjà présent qui viendrait à être complété permet de gagner des
+      points, seules les bonus présents sous les nouvelles lettres sont à
+      prendre en compte
     </p>
     <script src="load_daily_grid.js"></script>
     <script src="grid_checker.js"></script>

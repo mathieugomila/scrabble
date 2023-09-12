@@ -21,7 +21,7 @@ const colors = { ".": 'white', "3": "red", "2": "pink", "b": "cyan", "c": "blue"
 const grid = document.getElementById('grid');
 
 load_button();
-
+square_movement_arrow();
 
 function load_button() {
     document.getElementById("validateButton").addEventListener("click", async function () {
@@ -32,7 +32,7 @@ function load_button() {
             try {
                 await navigator.clipboard.writeText(text);
                 console.log('Texte copié');
-                document.getElementById("validateButton").textContent = `Score copié dans le presse-papier`;
+                document.getElementById("validateButton").firstChild.nodeValue = `Score copié dans le presse-papier`;
             } catch (err) {
                 console.log('Erreur, texte non copié', err);
             }
@@ -40,12 +40,21 @@ function load_button() {
     });
 }
 
-function square_input(square) {
-    square.textContent = square.textContent.toUpperCase();
-    if (letter_modified.includes(square.textContent)) {
+function square_input(square, e) {
+    if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward') {
+        console.log("Effacer");
+        square.classList.remove('modified');
+        square.classList.remove('letter');
+        square.textContent = "";
+        return;
+    }
+    console.log(e);
+    console.log(e.key);
+    square.firstChild.nodeValue = square.firstChild.nodeValue.toUpperCase();
+    if (letter_modified.includes(square.firstChild.nodeValue[square.firstChild.nodeValue.length - 1]) || (square.firstChild.nodeValue.length > 1 && square.firstChild.nodeValue[0] == square.firstChild.nodeValue[1])) {
 
-        if (square.textContent.length > 1) {
-            square.textContent = square.textContent.slice(-1);
+        if (square.firstChild.nodeValue.length > 1) {
+            square.firstChild.nodeValue = square.firstChild.nodeValue.slice(-1);
         }
 
         const range = document.createRange();
@@ -66,11 +75,13 @@ function square_input(square) {
         square.textContent = "";
     }
 
-    if (square.textContent.trim() == '' || square.textContent.length > 1) {
+    if (square.classList.contains("letters") && (firstChild.nodeValue.trim() == '' || square.firstChild.nodeValue.length > 1)) {
         square.classList.remove('modified');
         square.classList.remove('letter');
         square.textContent = "";
     }
+
+
 }
 
 function square_click(square) {
@@ -82,25 +93,52 @@ function square_click(square) {
     square.focus();
 }
 
-let squares = document.querySelectorAll('.square');
-document.addEventListener('keydown', function (e) {
-    let focused = document.activeElement;
-    let index = Array.from(squares).indexOf(focused);
+function square_movement_arrow() {
+    document.addEventListener('keydown', function (e) {
+        let squares = document.querySelectorAll('.square');
 
-    if (index !== -1) {
-        let nextIndex;
-        switch (e.key) {
-            case 'ArrowUp': nextIndex = index - 15; break;
-            case 'ArrowDown': nextIndex = index + 15; break;
-            case 'ArrowLeft': nextIndex = index - 1; break;
-            case 'ArrowRight': nextIndex = index + 1; break;
-        }
+        let focused = document.activeElement;
+        let index = Array.from(squares).indexOf(focused);
 
-        if (nextIndex >= 0 && nextIndex < squares.length) {
-            squares[nextIndex].focus();
+        if (index !== -1) {
+            let nextIndex;
+            switch (e.key) {
+                case 'ArrowUp': nextIndex = index - 15; break;
+                case 'ArrowDown': nextIndex = index + 15; break;
+                case 'ArrowLeft': nextIndex = index - 1; break;
+                case 'ArrowRight': nextIndex = index + 1; break;
+            }
+
+            if (nextIndex >= 0 && nextIndex < squares.length) {
+                squares[nextIndex].focus();
+            }
         }
+    });
+}
+
+function update_letter_score() {
+    let squares = document.querySelectorAll('.square');
+    for (let i = 0; i < squares.length; i++) {
+        if (squares[i].classList.contains('letter')) {
+            if (!squares[i].querySelector('score')) {
+                let letterSpan = document.createElement("span");
+                letterSpan.classList.add("score");
+                squares[i].appendChild(letterSpan);
+            }
+            if (squares[i].querySelector('.score')) {
+                squares[i].querySelector(".score").textContent = scrabble_letter_score[squares[i].firstChild.nodeValue];
+            }
+
+        }
+        // else {
+        //     if (squares[i].querySelector('score')) {
+        //         squares[i].children[0].textContent = "";
+        //     }
+        // }
     }
-});
+}
+
+
 
 function set_base_letters(square, i, j) {
     if (daily_grid[i * 15 + j] != ".") {
@@ -112,12 +150,3 @@ function set_base_letters(square, i, j) {
         square.removeAttribute('contenteditable');
     }
 }
-
-
-
-document.addEventListener('keydown', function (e) {
-    if (e.code === 'Enter') {
-        getModifiedSquares();  // Votre fonction
-    }
-});
-
