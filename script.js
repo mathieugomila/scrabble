@@ -27,7 +27,7 @@ function load_button() {
     document.getElementById("validateButton").addEventListener("click", async function () {
         if (current_score > 0) {
 
-            let text = `#SCRABBLEBLE jour n°${day_counter()} \nScore: ${current_score}\n\nhttp://scrabbleble.storage.googleapis.com/index.html`;
+            let text = `#SCRABBLEBLE jour n°${day_counter()} \nScore: ${current_score}\n\nhttps://scrabble.pheargame.net`;
             try {
                 await navigator.clipboard.writeText(text);
                 console.log('Texte copié');
