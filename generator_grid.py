@@ -243,6 +243,7 @@ if __name__ == "__main__":
 
         for i in range(0, 25):
             elapsed_time = time.time() - start_time
+            print(elapsed_time)
 
             if elapsed_time > 3600:
                 break
