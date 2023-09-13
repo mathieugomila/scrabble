@@ -1,12 +1,12 @@
 #grid {
   display: grid;
-  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  grid-template-columns: repeat(15, 60px);
   grid-gap: 5px;
 }
 
 #grid2 {
   display: grid;
-  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px;
+  grid-template-columns: repeat(7, 60px);
   grid-gap: 10px;
 }
 
@@ -16,17 +16,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background-color: rgb(255, 255, 255);
 }
 
 .square.white {
-  background-color: rgb(3, 150, 13);
+  background-color: rgb(255, 255, 255);
 }
 
 .square.cyan {
-  background-color: rgb(58, 220, 241);
+  background-color: rgb(5, 169, 190);
   color: rgb(255, 255, 255);
   white-space: pre-line;
   font-weight: bold;
@@ -37,7 +37,7 @@
 }
 
 .square.blue {
-  background-color: rgb(9, 5, 252);
+  background-color: rgb(53, 52, 136);
   color: rgb(255, 255, 255);
   white-space: pre-line;
   font-weight: bold;
@@ -48,7 +48,7 @@
 }
 
 .square.pink {
-  background-color: rgb(236, 146, 232);
+  background-color: rgb(245, 94, 165);
   color: rgb(255, 255, 255);
   white-space: pre-line;
   font-weight: bold;
@@ -59,7 +59,7 @@
 }
 
 .square.red {
-  background-color: rgb(241, 3, 3);
+  background-color: rgb(161, 8, 8);
   color: rgb(255, 255, 255);
   white-space: pre-line;
   font-weight: bold;
@@ -86,8 +86,8 @@
 
 .score {
   position: absolute;
-  right: 1px;
-  bottom: 1px;
+  right: 5px;
+  bottom: 5px;
   font-size: 16px;
 }
 
@@ -101,10 +101,10 @@
 
 #validateButton {
   position: absolute;
-  top: calc(100% - 120px);
+  bottom: 30px;
   height: 100px;
-  left: calc(15 * 60px + 20px);
-  width: calc(100% - 940px); /* Largeur totale - (Left + MarginRight) */
-  font-size: 16px;
+  left: 1020px;
+  width: calc(98% - 1020px); /* Largeur totale - (Left + MarginRight) */
+  font-size: 25px;
   font-weight: bold;
 }
