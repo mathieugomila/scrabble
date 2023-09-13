@@ -131,8 +131,41 @@ document.addEventListener("drop", function (event) {
     let droppedElement = document.getElementById(event.dataTransfer.getData('DraggedItem'));
     drop_letter = droppedElement.firstChild.nodeValue;
     let targetElement = event.target;
-    if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square")) {
+    if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square") && !targetElement.classList.contains("non-editable")) {
         square_add_modified_letter(targetElement, drop_letter);
+        updateHand();
+        checkGridAndCalculateScore();
+        update_letter_score();
+    }
+
+    if (targetElement.classList.contains("hand")) {
+        let all_squares = document.querySelectorAll('.hand');
+        let index_destination_letter = Array.from(all_squares).indexOf(targetElement);
+        let index_dragged_letter = Array.from(all_squares).indexOf(droppedElement);
+
+        console.log(index_dragged_letter, index_destination_letter);
+
+        let temp_base = hand_letters_base[index_destination_letter];
+        let temp = hand_letters[index_destination_letter];
+
+        hand_letters_base[index_destination_letter] = hand_letters_base[index_dragged_letter];
+        hand_letters[index_destination_letter] = hand_letters[index_dragged_letter];
+
+        hand_letters_base[index_dragged_letter] = temp_base;
+        hand_letters[index_dragged_letter] = temp;
+
+        console.log(document.querySelectorAll('.hand'));
+
+        let element1 = all_squares[index_destination_letter];
+        let element2 = all_squares[index_dragged_letter];
+
+        let parent = element1.parentNode;
+        let clone1 = element1.cloneNode(true);
+        let clone2 = element2.cloneNode(true);
+
+        element1.replaceWith(clone2);
+        element2.replaceWith(clone1);
+
         updateHand();
         checkGridAndCalculateScore();
         update_letter_score();

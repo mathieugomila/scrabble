@@ -95,7 +95,7 @@ function checkWorldNextToOther(squares) {
     else if (cols.size === 1 && rows.size >= 1) {
         let min_index = Math.min(...rows);
         let max_index = Math.max(...rows);
-        if (min_index > 0 && allSquares[min_index * 15 + Array.from(cols)[0] - 1].classList.contains('non-editable')) {
+        if (min_index > 0 && allSquares[(min_index - 1) * 15 + Array.from(cols)[0]].classList.contains('non-editable')) {
             return true;
         }
         if (max_index < 14 && allSquares[(max_index + 1) * 15 + Array.from(cols)[0]].classList.contains('non-editable')) {
