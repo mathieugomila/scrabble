@@ -26,7 +26,7 @@ function checkGridAndCalculateScore() {
         }
     }
 
-    if (hand_letters.every(el => el === ".")) {
+    if (letter_modified.every(el => el === ".")) {
         current_score += 50;
     }
 
