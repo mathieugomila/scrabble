@@ -125,11 +125,27 @@ document.addEventListener("dragstart", function (event) {
     event.dataTransfer.setData("DraggedItem", event.target.id);
 });
 
+document.addEventListener("touchstart", function (event) {
+    event.dataTransfer.setData("DraggedItem", event.target.id);
+});
+
 document.addEventListener("dragover", function (event) {
     event.preventDefault();
 });
 
+document.addEventListener("touchmove", function (event) {
+    event.preventDefault();
+});
+
 document.addEventListener("drop", function (event) {
+    drop(event);
+});
+
+document.addEventListener("touchend", function (event) {
+    drop(event);
+});
+
+function drop(event) {
     let droppedElement = document.getElementById(event.dataTransfer.getData('DraggedItem'));
     drop_letter = droppedElement.firstChild.nodeValue;
     let targetElement = event.target;
@@ -172,5 +188,4 @@ document.addEventListener("drop", function (event) {
         checkGridAndCalculateScore();
         update_letter_score();
     }
-
-});
+}

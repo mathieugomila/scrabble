@@ -126,7 +126,7 @@
   #grid2 {
     grid-template-columns: repeat(7, 30%);
     grid-gap: 10%;
-    bottom: 10%;
+    bottom: 7%;
     left: 5%;
     height: 4%;
   }
