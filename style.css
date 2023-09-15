@@ -87,7 +87,8 @@
   font-weight: normal;
   border-radius: 15%;
   transform: rotate(3deg);
-  font-size: 24px;
+  font-size: 40px;
+  display: flex;
 }
 
 .score {
