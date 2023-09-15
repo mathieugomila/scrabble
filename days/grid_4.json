@@ -1,4 +1,1 @@
-{
-  "grid": ".PARAT..C..L....I...RADE.DOSERCEUX.O..N..I....U...U..T.ORALE.....V..S...N...ALPHA....SITES...R....B.U.A.I..METS.GOLF.N.T...N....U.F...E...DEDANS.I............E.T................................................................",
-  "hand": ["F", "V", "M", "L", "A", "E", "Q"]
-}
+{"grid": "......OU..............N..TEL........RISEE............AH...........MIL..............E.........BOUDER.........O...M..A.......U..SI..N.......C..USA.GAI........N.ILE...........DE...................................................", "hand": ["Z", "P", "E", "R", "E", "U", "A"], "solution": {"word": "APEUREZ", "position": [7, 13], "direction": "down", "score": 97, "pulled_letters": ["A", "P", "E", "U", "R", "E", "Z"]}}

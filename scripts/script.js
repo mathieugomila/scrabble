@@ -15,6 +15,12 @@ b..2...b...2..b
 .2...c...c...2.
 3..b...3...b..3`.trim().replace(/\n/g, '');;
 
+let emoji_above_max = "😳😳🦊🦊🪳🪳😳😳"
+let emoji_max = "🏆🏆🏆";
+let emoji_90_pourcent = "🥵🥵🥵";
+let emoji_75_pourcent = "🤒🤒🤒";
+let emoji_noob = "🤣🤣👎👎🤣🤣"
+
 
 const colors = { ".": 'white', "3": "red", "2": "pink", "b": "cyan", "c": "blue" };
 
@@ -27,9 +33,32 @@ function load_button() {
     document.getElementById("validateButton").addEventListener("click", async function () {
         if (current_score > 0) {
 
-            let text = `#SCRABBLEBLE jour n°${day_counter()} \nScore: ${current_score}\n\nhttps://scrabble.pheargame.net`;
+
+
+            let max_point = best_score_possible_dict["score"];
+            emoji = ""
+            if (current_score > max_point) {
+                emoji = emoji_above_max;
+            }
+            else if (current_score == max_point) {
+                emoji = emoji_max;
+            }
+            else if (current_score >= 0.9 * max_point) {
+                emoji = emoji_90_pourcent;
+            }
+            else if (current_score >= 0.75 * max_point) {
+                emoji = emoji_75_pourcent;
+            }
+            else if (current_score <= 0.1 * max_point) {
+                emoji = emoji_noob;
+            }
+
+            let text = `#SCRABBLEBLE jour n°${day_counter}\n\nScore: ${current_score} ${emoji}\n\nhttps://scrabble.pheargame.net`;
+
+
             try {
                 await navigator.clipboard.writeText(text);
+                validate_button_pushed = true;
                 console.log('Texte copié');
                 document.getElementById("validateButton").firstChild.nodeValue = `Score copié dans le presse-papier`;
             } catch (err) {

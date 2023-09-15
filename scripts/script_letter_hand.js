@@ -13,13 +13,13 @@ let error_messages = []
 
 
 async function loadLetterCount() {
-    const response = await fetch('letters_count.json');
+    const response = await fetch('data/letters_count.json');
     const data = await response.json();
     return data;
 }
 
 async function readLetterScore() {
-    const response = await fetch('letters_score.json');
+    const response = await fetch('data/letters_score.json');
     const data = await response.json();
     return data;
 }
@@ -31,7 +31,7 @@ async function loadLetterScore() {
 
 
 async function readWordsList() {
-    const response = await fetch('ods6.txt');
+    const response = await fetch('data/ods6.txt');
     const data = await response.text();
     const words = data.split('\n');
     return words;
@@ -112,9 +112,11 @@ function updateHand() {
     for (let i = 0; i < 7; i++) {
         if (letter_modified[i] == ".") {
             squares[i].classList.add('used');
+            squares[i].setAttribute("draggable", "false");
         }
         else {
             squares[i].classList.remove('used');
+            squares[i].setAttribute("draggable", "true");
         }
     }
 }

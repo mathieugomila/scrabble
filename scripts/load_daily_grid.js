@@ -1,5 +1,6 @@
 daily_grid = ''
 daily_hand = []
+best_score_possible_dict = {}
 day_counter = 0
 
 function searchDayIndex() {
@@ -10,11 +11,14 @@ function searchDayIndex() {
     return diffInDays;
 }
 
-async function loadDailyGrid() {
-    let diffInDays = searchDayIndex();
-    const response = await fetch(`days/grid_${diffInDays}.json`);
-    const data = await response.json();
-    return data;
+async function loadDailyGrid(today_day) {
+    const response_today = await fetch(`days/grid_${today_day}.json`);
+    const data_today = await response_today.json();
+
+    const response_yesterday = await fetch(`days/grid_${today_day - 1}.json`);
+    const data_yesterday = await response_yesterday.json();
+
+    return { "today": data_today, "yesterday": data_yesterday };
 }
 
 function addCaseIndication(square, case_pattern) {
@@ -72,10 +76,11 @@ async function create_grid() {
 }
 
 async function main() {
-    let daily_grid_json = await loadDailyGrid();
-    daily_grid = daily_grid_json["grid"];
-    daily_hand = daily_grid_json["hand"]
-    day_counter = searchDayIndex;
+    day_counter = searchDayIndex();
+    let daily_grid_json = await loadDailyGrid(day_counter);
+    daily_grid = daily_grid_json["today"]["grid"];
+    daily_hand = daily_grid_json["today"]["hand"];
+    best_score_possible_dict = daily_grid_json["today"]["solution"];
     create_grid()
 }
 
