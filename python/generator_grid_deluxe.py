@@ -65,7 +65,7 @@ class Bag:
 
 
 class Dictionary(set):
-    def __init__(self, file="data/ods6.txt"):
+    def __init__(self, file="data/francais_10000.txt"):
         with open(file, "r", encoding="utf-8") as fp:
             lines = fp.readlines()
         super().__init__(
@@ -84,8 +84,8 @@ class Game:
     def __init__(
         self,
         n_players=1,
-        generator_dictionary_file="data/liste_francais.txt",
-        scrabble_dictionary_file="data/ods6.txt",
+        generator_dictionary_file="data/francais_10000.txt",
+        scrabble_dictionary_file="data/francais_10000.txt",
     ):
         self.n_players = n_players
         self.bag = Bag()
@@ -192,14 +192,20 @@ if __name__ == "__main__":
                 i += 1
             grid_json = game.make_json()
             if (
-                grid_json["solution"]["score"] > 35
-                and len(grid_json["solution"]["pulled_letters"]) > 1
+                grid_json["solution"]["score"] > 30
+                and len(grid_json["solution"]["pulled_letters"]) > 2
             ):
                 for day in range(0, 10000):
                     if not Path(f"days/grid_{day}.json").exists():
                         with open(f"days/grid_{day}.json", "w") as f:
                             json.dump(grid_json, f, cls=NumpyEncoder)
                         break
+            else:
+                print(
+                    "Not good enough",
+                    grid_json["solution"]["word"],
+                    grid_json["solution"]["score"],
+                )
             nbr_day += 1
         except Exception as e:
             print(e)

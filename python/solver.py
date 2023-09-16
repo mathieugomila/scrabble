@@ -289,7 +289,7 @@ if __name__ == "__main__":
     daily_grid_str = ".PARAT..C..L....I...RADE.DOSERCEUX.O..N..I....U...U..T.ORALE.....V..S...N...ALPHA....SITES...R....B.U.A.I..METS.GOLF.N.T...N....U.F...E...DEDANS.I............E.T................................................................"
     hand_letters = ["F", "V", "M", "L", "A", "E", "Q"]
     daily_grid = np.array(list(daily_grid_str)).reshape((15, 15))
-    with open("data/ods6.txt", "r") as fp:
+    with open("data/francais_10000.txt", "r") as fp:
         lines = fp.readlines()
     dictionary = set(line[:-1] for line in lines)
     solutions = solve(daily_grid, hand_letters, dictionary)

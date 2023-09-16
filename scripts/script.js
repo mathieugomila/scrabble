@@ -15,7 +15,7 @@ b..2...b...2..b
 .2...c...c...2.
 3..b...3...b..3`.trim().replace(/\n/g, '');;
 
-let emoji_above_max = "😳😳🦊🦊🪳🪳😳😳"
+let emoji_above_max = "😳😳🤯🤯😳😳"
 let emoji_max = "🏆🏆🏆";
 let emoji_90_pourcent = "🥵🥵🥵";
 let emoji_75_pourcent = "🤒🤒🤒";
