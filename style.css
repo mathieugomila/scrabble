@@ -229,3 +229,9 @@
     font-weight: bold;
   }
 }
+
+[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  pointer-events: none;
+  display: block; /* For Firefox */
+}
