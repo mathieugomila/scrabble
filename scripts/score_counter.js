@@ -134,6 +134,7 @@ function retrieveWordRow(pos_index, changement) {
 
             let counter_letter = count_letter(allSquares[index_word].firstChild.nodeValue, index_word);
             current_word_score += counter_letter["score"];
+            current_word_multiplier *= counter_letter["multiplier"];
         }
         if (allSquares[index_word].classList.contains('modified')) {
             is_current_word_modified = true
@@ -203,6 +204,8 @@ function retrieveWordCol(pos_index, changement) {
 
             let counter_letter = count_letter(allSquares[index_word].firstChild.nodeValue, index_word);
             current_word_score += counter_letter["score"];
+            current_word_multiplier *= counter_letter["multiplier"];
+
         }
         if (allSquares[index_word].classList.contains('modified')) {
             is_current_word_modified = true
