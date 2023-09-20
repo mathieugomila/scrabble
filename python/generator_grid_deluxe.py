@@ -145,7 +145,8 @@ class Game:
         else:
             hand = self.player_hands[player]
             matches = solve(self.grid, hand, self.gen_dico)
-            rand_match = choice(matches)
+            rand_match = max(matches, key=lambda match: len(match.pulled_letters))  # get a word with as many pulled letters as possible
+            # rand_match = choice(matches)
             for k, letter in enumerate(rand_match.word):
                 if rand_match.direction == Direction.LR:
                     self.grid[
@@ -190,6 +191,7 @@ if __name__ == "__main__":
             while len(game.bag) > 30:
                 game.step(i % 4)
                 i += 1
+                # print(game)
             grid_json = game.make_json()
             if (
                 grid_json["solution"]["score"] > 30
@@ -208,4 +210,4 @@ if __name__ == "__main__":
                 )
             nbr_day += 1
         except Exception as e:
-            print(e)
+            print(str(e))

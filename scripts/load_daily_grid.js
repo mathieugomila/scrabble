@@ -23,16 +23,20 @@ async function loadDailyGrid(today_day) {
 
 function addCaseIndication(square, case_pattern) {
     if (case_pattern == "2") {
-        square.textContent = `MOT\nDOUBLE`;
+        square.setAttribute("placeholder", `MOT\nDOUBLE`);
+        // square.textContent = `MOT\nDOUBLE`;
     }
     else if (case_pattern == "3") {
-        square.textContent = "MOT\nTRIPLE";
+        square.setAttribute("placeholder", "MOT\nTRIPLE");
+        // square.textContent = "MOT\nTRIPLE";
     }
     else if (case_pattern == "b") {
-        square.textContent = "LETTRE\nDOUBLE";
+        square.setAttribute("placeholder", "LETTRE\nDOUBLE");
+        // square.textContent = "LETTRE\nDOUBLE";
     }
     else if (case_pattern == "c") {
-        square.textContent = "LETTRE\nTRIPLE";
+        square.setAttribute("placeholder", "LETTRE\nTRIPLE");
+        // square.textContent = "LETTRE\nTRIPLE";
     }
 }
 
