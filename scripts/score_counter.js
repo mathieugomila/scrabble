@@ -42,7 +42,7 @@ function checkGridAndCalculateScore() {
     }
 
     let modifiedMessages = error_messages.map(msg => "&nbsp;&nbsp;&nbsp;&nbsp;-" + msg);
-    document.getElementById("errorText").innerHTML = "<u>Information :</u><br>" + modifiedMessages.join("<br>");
+    document.getElementById("errorText").innerHTML = "<u>Informations :</u><br>" + modifiedMessages.join("<br>");
 }
 
 function getModifiedIndex() {

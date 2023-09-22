@@ -23,20 +23,16 @@ async function loadDailyGrid(today_day) {
 
 function addCaseIndication(square, case_pattern) {
     if (case_pattern == "2") {
-        square.setAttribute("placeholder", `MOT\nDOUBLE`);
-        // square.textContent = `MOT\nDOUBLE`;
+        square.textContent = `MOT\nDOUBLE`;
     }
     else if (case_pattern == "3") {
-        square.setAttribute("placeholder", "MOT\nTRIPLE");
-        // square.textContent = "MOT\nTRIPLE";
+        square.textContent = "MOT\nTRIPLE";
     }
     else if (case_pattern == "b") {
-        square.setAttribute("placeholder", "LETTRE\nDOUBLE");
-        // square.textContent = "LETTRE\nDOUBLE";
+        square.textContent = "LETTRE\nDOUBLE";
     }
     else if (case_pattern == "c") {
-        square.setAttribute("placeholder", "LETTRE\nTRIPLE");
-        // square.textContent = "LETTRE\nTRIPLE";
+        square.textContent = "LETTRE\nTRIPLE";
     }
 }
 
@@ -49,25 +45,12 @@ async function create_grid() {
             addCaseIndication(square, pattern[j + 15 * i]);
             square.className = `square ${color}`;
             square.setAttribute('tabindex', '0');
-            square.setAttribute('contenteditable', 'true');
             square.addEventListener('click', function () {
                 square_click(square);
                 updateHand();
                 checkGridAndCalculateScore();
                 square.focus();
                 update_letter_score();
-            });
-            square.addEventListener('input', function (e) {
-                square_input(square, e);
-                updateHand();
-                checkGridAndCalculateScore();
-                update_letter_score();
-            });
-
-            square.addEventListener('focus', function () {
-                if (!square.classList.contains('non-editable')) {
-                    square.setAttribute('contenteditable', 'true');
-                }
             });
 
             set_base_letters(square, i, j);

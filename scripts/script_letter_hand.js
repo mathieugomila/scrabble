@@ -11,6 +11,8 @@ let score = 0;
 
 let error_messages = []
 
+let draggedItem
+
 
 async function loadLetterCount() {
     const response = await fetch('data/letters_count.json');
@@ -122,12 +124,14 @@ function updateHand() {
 }
 
 document.addEventListener("dragstart", function (event) {
-    event.dataTransfer.setData("DraggedItem", event.target.id);
+    draggedItem = event.target.id
+    // event.dataTransfer.setData("DraggedItem", event.target.id);
 });
 
 document.addEventListener("touchstart", function (event) {
-    event.dataTransfer.setData("DraggedItem", event.target.id);
-});
+    draggedItem = event.target.id
+    event.preventDefault();
+}, { passive: false });
 
 document.addEventListener("dragover", function (event) {
     event.preventDefault();
@@ -135,7 +139,7 @@ document.addEventListener("dragover", function (event) {
 
 document.addEventListener("touchmove", function (event) {
     event.preventDefault();
-});
+}, { passive: false });
 
 document.addEventListener("drop", function (event) {
     drop(event);
@@ -146,14 +150,26 @@ document.addEventListener("touchend", function (event) {
 });
 
 function drop(event) {
-    let droppedElement = document.getElementById(event.dataTransfer.getData('DraggedItem'));
+    let droppedElement = document.getElementById(draggedItem);
+    console.log(droppedElement)
     drop_letter = droppedElement.firstChild.nodeValue;
     let targetElement = event.target;
+    // TODO try this
+    // if (droppedElement.classList.contains("modified")) {
+    //     droppedElement.classList.remove('modified');
+    //     droppedElement.classList.remove('letter');
+    //     droppedElement.textContent = "";
+    //     let all_squares = document.querySelectorAll('.square');
+    //     let index = Array.from(all_squares).indexOf(droppedElement);
+    //     addCaseIndication(droppedElement, pattern[index]);
+    //     return
+    // }
     if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square") && !targetElement.classList.contains("non-editable")) {
         square_add_modified_letter(targetElement, drop_letter);
         updateHand();
         checkGridAndCalculateScore();
         update_letter_score();
+
     }
 
     if (targetElement.classList.contains("hand")) {

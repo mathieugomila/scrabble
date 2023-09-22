@@ -71,6 +71,9 @@ function load_button() {
 function square_add_modified_letter(square, content) {
     square.classList.add('modified');
     square.classList.add('letter');
+    // TODO try this
+    // square.setAttribute("draggable", "true");
+    // square.id = `draggableItem_${square.id}`;
 
     // if (!square.querySelector('.score')) {
     //     let letterSpan = document.createElement("span");
@@ -199,7 +202,5 @@ function set_base_letters(square, i, j) {
         square.classList.add('non-editable');
         square.classList.add('default');
         square.classList.add('letter');
-        square.contentEditable = false;
-        square.removeAttribute('contenteditable');
     }
 }
