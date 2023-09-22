@@ -1,16 +1,47 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+}
+
+.grid_container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hand_container {
+  height: 10vw;
+  width: 100%;
+}
+
+.button_container {
+  height: 10vw;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 #grid {
   display: grid;
-  grid-template-columns: repeat(15, 60px);
-  grid-gap: 5px;
+  grid-template-columns: repeat(15, 6vw);
+  grid-auto-rows: 6vw;
+  grid-auto-columns: 6vw;
+  grid-gap: 0.5vw;
 }
 
 #grid2 {
   display: grid;
-  grid-template-columns: repeat(7, 60px);
-  grid-gap: 10px;
-  position: absolute;
-  bottom: 150px;
-  left: 1020px;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(7, 6vw);
+  grid-auto-rows: 6vw;
+  grid-auto-columns: 6vw;
+  grid-gap: 2vw;
 }
 
 #errorText {
@@ -19,19 +50,11 @@
   left: 1020px;
 }
 
-#explicationText {
-  position: absolute;
-  top: 0;
-  left: 1020px;
-}
-
 .square {
   border: 1px solid #000;
-  font-size: 24px;
+  font-size: 1vw;
   justify-content: center;
   align-items: center;
-  width: 60px;
-  height: 60px;
   background-color: rgb(255, 255, 255);
 }
 
@@ -44,7 +67,7 @@
   color: rgb(255, 255, 255);
   white-space: pre-line;
   font-weight: bold;
-  font-size: 11px;
+  font-size: 1vw;
   justify-content: center;
   align-items: center;
 }
@@ -53,7 +76,7 @@
   background-color: rgb(53, 52, 136);
   color: rgb(255, 255, 255);
   font-weight: bold;
-  font-size: 11px;
+  font-size: 1vw;
   justify-content: center;
   align-items: center;
 }
@@ -62,7 +85,7 @@
   background-color: rgb(245, 94, 165);
   color: rgb(255, 255, 255);
   font-weight: bold;
-  font-size: 11px;
+  font-size: 1vw;
   justify-content: center;
   align-items: center;
 }
@@ -71,7 +94,7 @@
   background-color: rgb(161, 8, 8);
   color: rgb(255, 255, 255);
   font-weight: bold;
-  font-size: 11px;
+  font-size: 1vw;
   justify-content: center;
   align-items: center;
 }
@@ -87,15 +110,16 @@
   font-weight: normal;
   border-radius: 15%;
   transform: rotate(3deg);
-  font-size: 40px;
+  font-size: 4vw;
   display: flex;
+  overflow: visible;
 }
 
 .score {
   position: absolute;
   right: 5px;
   bottom: 5px;
-  font-size: 16px;
+  font-size: 1.5vw;
 }
 
 .square.letter.used {
@@ -107,130 +131,26 @@
 }
 
 #validateButton {
-  position: absolute;
-  bottom: 30px;
-  height: 100px;
-  left: 1020px;
-  width: calc(98% - 1020px); /* Largeur totale - (Left + MarginRight) */
-  font-size: 25px;
+  width: 100%;
+  font-size: 5vw;
   font-weight: bold;
 }
 
 @media only screen and (max-width: 768px) {
-  #grid {
-    grid-template-columns: repeat(15, 5.6%);
-    grid-template-rows: repeat(15, 2%);
-    grid-gap: 1%;
-  }
-
-  #grid2 {
-    grid-template-columns: repeat(7, 30%);
-    grid-gap: 10%;
-    bottom: 7%;
-    left: 5%;
-    height: 4%;
-  }
-
-  #errorText {
-    position: absolute;
-    display: none;
-  }
-
-  #explicationText {
-    position: absolute;
-    display: none;
-  }
-
-  .square {
+  .grid_container {
     width: 100%;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
   }
 
-  .square.white {
-    background-color: rgb(255, 255, 255);
-  }
-
-  .square.cyan {
-    background-color: rgb(5, 169, 190);
-    color: rgb(255, 255, 255);
-    white-space: pre-line;
-    font-weight: bold;
-    font-size: 30%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .square.blue {
-    background-color: rgb(53, 52, 136);
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    font-size: 30%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .square.pink {
-    background-color: rgb(245, 94, 165);
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    font-size: 30%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .square.red {
-    background-color: rgb(161, 8, 8);
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    font-size: 30%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .square.hand {
+  .hand_container {
     width: 100%;
-    height: 100%;
-    background-color: rgb(240, 218, 148);
   }
 
-  .square.letter {
-    background-color: rgb(240, 218, 148);
-    box-shadow: 0.5% 0.5% 0.5% rgba(0, 0, 0, 0.9);
-    color: rgb(0, 0, 0);
-    font-weight: normal;
-    border-radius: 15%;
-    transform: rotate(3deg);
-    font-size: 120%;
-  }
-
-  .score {
-    position: absolute;
-    right: 5%;
-    bottom: 5%;
-    font-size: 50%;
-  }
-
-  .square.letter.used {
-    background-color: rgba(165, 170, 170, 0.1);
-  }
-
-  .square.default {
-    background-color: rgb(192, 176, 120);
-  }
-
-  #validateButton {
-    position: absolute;
-    bottom: 1%;
-    height: 5%;
-    left: 3%;
-    width: 94%;
-    font-size: 20px;
-    font-weight: bold;
+  .button_container {
+    width: 100%;
   }
 }
 
-[contenteditable=true]:empty:before {
+[contenteditable="true"]:empty:before {
   content: attr(placeholder);
   pointer-events: none;
   display: block; /* For Firefox */

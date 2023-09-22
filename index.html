@@ -5,33 +5,20 @@
     <title>Scrabbleble</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <div id="grid"></div>
-    <div id="grid2"></div>
-    <button id="validateButton">Positionnez vos lettres</button>
-    <p id="errorText">
-      <u>Information :</u>
-    </p>
-    <p id="explicationText">
-      <u>Explications :</u> <br /><br />
-      Chaque jour, une nouvelle grille est générée aléatoirement <br /><br />
-
-      Vous ne jouez qu'un seul tour d'une partie de scrabble déjà commencée<br /><br />
-
-      L'objectif est d'obtenir le meilleur score <br /><br />
-
-      Pour le nouveau mot formé, les points sont calculés en fonction des scores
-      inscrits sur les cases. Les cases roses et rouges multiplient par 2 et 3
-      le total de point du mot. Les cases cyans et bleus multiplient la lettre
-      posée par dessus par deux ou trois. Ces effets peuvent se combiner
-      <br /><br />
-
-      Chaque mot déjà présent qui viendrait à être complété permet de gagner des
-      points, seuls les bonus présents sous les nouvelles lettres sont à prendre
-      en compte
-    </p>
+    <div id="container" class="container">
+      <div id="grid_container" class="grid_container">
+        <div id="grid" class="grid"></div>
+      </div>
+      <div id="hand_container" class="hand_container">
+        <div id="grid2"></div>
+      </div>
+      <div id="button_container" class="button_container">
+        <button id="validateButton">Positionnez vos lettres</button>
+      </div>
+      <p id="errorText"></p>
+    </div>
     <script src="scripts/load_daily_grid.js"></script>
     <script src="scripts/grid_checker.js"></script>
     <script src="scripts/script.js"></script>
