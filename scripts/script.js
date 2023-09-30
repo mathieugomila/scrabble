@@ -68,9 +68,11 @@ function load_button() {
     });
 }
 
-function square_add_modified_letter(square, content) {
+function square_add_modified_letter(square, content, id) {
     square.classList.add('modified');
     square.classList.add('letter');
+    // square.setAttribute("draggable", "true");
+    // square.id = id
     // TODO try this
     // square.setAttribute("draggable", "true");
     // square.id = `draggableItem_${square.id}`;

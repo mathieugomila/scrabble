@@ -69,6 +69,7 @@ async function main() {
     daily_hand = daily_grid_json["today"]["hand"];
     best_score_possible_dict = daily_grid_json["today"]["solution"];
     create_grid()
+    document.getElementById("title").querySelector('h2').innerText = `SCRABBLEBLE n°${day_counter}`
 }
 
 main();
