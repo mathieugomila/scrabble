@@ -49,7 +49,7 @@ function load_button() {
             else if (current_score >= 0.75 * max_point) {
                 emoji = emoji_75_pourcent;
             }
-            else if (current_score <= 0.1 * max_point) {
+            else if (current_score <= 0.4 * max_point) {
                 emoji = emoji_noob;
             }
 

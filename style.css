@@ -32,7 +32,7 @@
 }
 
 .error_text_container {
-  height: 10vh;
+  height: 15vh;
   width: 80%;
   justify-content: center;
   align-items: center;
@@ -176,20 +176,19 @@
   }
 
   .hand_container {
-    aspect-ratio: 1 / 1;
     height: 10vw;
     width: 100%;
   }
 
   .error_text_container {
-    height: 20vw;
+    height: 15vw;
     width: 90%;
     justify-content: center;
     align-items: center;
   }
 
   .button_container {
-    height: 10vw;
+    height: 5vw;
     width: 90%;
     justify-content: center;
     align-items: center;

@@ -73,6 +73,54 @@ async function getSevenLetters() {
 
     await loadLetterCount();
     update_letter_score();
+    set_letter_behavior();
+}
+
+function set_letter_behavior() {
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("dragstart", function (event) {
+            draggedItem = event.target.id
+            event.dataTransfer.setData("DraggedItem", event.target.id);
+        })
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("touchstart", function (event) {
+            draggedItem = event.target.id;
+            event.preventDefault();
+        }, { passive: false });
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("dragover", function (event) {
+            event.preventDefault();
+        })
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("touchmove", function (event) {
+            event.preventDefault();
+        })
+    }, { passive: false });
+
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("drop", function (event) {
+            let droppedElement = document.getElementById(draggedItem);
+            let targetElement = event.target;
+            drop(droppedElement, targetElement);
+        })
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("touchend", function (event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const touchEndY = event.changedTouches[0].clientY;
+            const targetElement = document.elementFromPoint(touchEndX, touchEndY);
+            let droppedElement = document.getElementById(draggedItem);
+            drop(droppedElement, targetElement);
+        })
+    });
 }
 
 function pullOneLetter() {
@@ -121,40 +169,10 @@ function updateHand() {
             squares[i].setAttribute("draggable", "true");
         }
     }
+    set_letter_behavior();
 }
 
-document.addEventListener("dragstart", function (event) {
-    draggedItem = event.target.id
-    event.dataTransfer.setData("DraggedItem", event.target.id);
-});
 
-document.addEventListener("touchstart", function (event) {
-    draggedItem = event.target.id
-    event.preventDefault();
-}, { passive: false });
-
-document.addEventListener("dragover", function (event) {
-    event.preventDefault();
-});
-
-document.addEventListener("touchmove", function (event) {
-    event.preventDefault();
-}, { passive: false });
-
-
-document.addEventListener("drop", function (event) {
-    let droppedElement = document.getElementById(draggedItem);
-    let targetElement = event.target;
-    drop(droppedElement, targetElement);
-});
-
-document.addEventListener("touchend", function (event) {
-    const touchEndX = event.changedTouches[0].clientX;
-    const touchEndY = event.changedTouches[0].clientY;
-    const targetElement = document.elementFromPoint(touchEndX, touchEndY);
-    let droppedElement = document.getElementById(draggedItem);
-    drop(droppedElement, targetElement);
-});
 
 function drop(droppedElement, targetElement) {
     //let droppedElement = document.getElementById(draggedItem);
@@ -169,7 +187,11 @@ function drop(droppedElement, targetElement) {
     //     return
     // }
 
-    if (droppedElement == null) {
+    if (targetElement == null) {
+        return
+    }
+
+    if (droppedElement == null && !targetElement.classList.contains("hand") && targetElement.classList.contains("letter")) {
         targetElement.classList.remove('modified');
         targetElement.classList.remove('letter');
         targetElement.textContent = "";
@@ -179,6 +201,10 @@ function drop(droppedElement, targetElement) {
         updateHand();
         checkGridAndCalculateScore();
         update_letter_score();
+        return
+    }
+
+    if (droppedElement == null) {
         return
     }
 
