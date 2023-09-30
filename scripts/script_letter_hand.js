@@ -191,6 +191,10 @@ function drop(droppedElement, targetElement) {
         return
     }
 
+    if (targetElement.classList.contains("non-editable")) {
+        return
+    }
+
     if (droppedElement == null && !targetElement.classList.contains("hand") && targetElement.classList.contains("letter")) {
         targetElement.classList.remove('modified');
         targetElement.classList.remove('letter');
