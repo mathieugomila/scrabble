@@ -168,6 +168,7 @@ function drop(droppedElement, targetElement) {
     //     addCaseIndication(droppedElement, pattern[index]);
     //     return
     // }
+
     if (droppedElement == null) {
         targetElement.classList.remove('modified');
         targetElement.classList.remove('letter');
@@ -180,6 +181,11 @@ function drop(droppedElement, targetElement) {
         update_letter_score();
         return
     }
+
+    if (droppedElement.classList.contains("used")) {
+        return;
+    }
+
     let drop_letter = droppedElement.firstChild.nodeValue;
     if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square") && !targetElement.classList.contains("non-editable")) {
         square_add_modified_letter(targetElement, drop_letter, drop_letter.id);

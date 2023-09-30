@@ -27,7 +27,7 @@
 }
 
 .hand_container {
-  height: 5vh;
+  height: 10vh;
   width: 100%;
 }
 
@@ -57,9 +57,9 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-columns: repeat(7, 2.4vw);
-  grid-auto-rows: 2.4vw;
-  grid-auto-columns: 2.4vw;
+  grid-template-columns: repeat(7, 2.2vw);
+  grid-auto-rows: 2.2vw;
+  grid-auto-columns: 2.2vw;
   grid-gap: 0.8vw;
 }
 
@@ -132,6 +132,7 @@
   font-size: 1.5vw;
   display: flex;
   overflow: visible;
+  aspect-ratio: 1 / 1;
 }
 
 .score {
@@ -175,6 +176,7 @@
   }
 
   .hand_container {
+    aspect-ratio: 1 / 1;
     height: 10vw;
     width: 100%;
   }
@@ -205,10 +207,11 @@
     display: grid;
     justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(7, 6vw);
-    grid-auto-rows: 6vw;
-    grid-auto-columns: 6vw;
+    grid-template-columns: repeat(7, 8vw);
+    grid-auto-rows: 8vw;
+    grid-auto-columns: 8vw;
     grid-gap: 2vw;
+    aspect-ratio: 1 / 1;
   }
 
   #errorText {
@@ -268,6 +271,7 @@
 
   .square.hand {
     background-color: rgb(240, 218, 148);
+    aspect-ratio: 1 / 1;
   }
 
   .square.letter {
