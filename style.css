@@ -164,6 +164,7 @@
     flex-direction: column;
     background-color: rgb(255, 255, 255);
     overflow-x: hidden;
+    height: 100vh;
   }
 
   .grid_container {
