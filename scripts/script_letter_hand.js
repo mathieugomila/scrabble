@@ -11,6 +11,8 @@ let score = 0;
 
 let error_messages = []
 
+let draggedItem
+
 
 async function loadLetterCount() {
     const response = await fetch('data/letters_count.json');
@@ -71,6 +73,54 @@ async function getSevenLetters() {
 
     await loadLetterCount();
     update_letter_score();
+    set_letter_behavior();
+}
+
+function set_letter_behavior() {
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("dragstart", function (event) {
+            draggedItem = event.target.id
+            event.dataTransfer.setData("DraggedItem", event.target.id);
+        })
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("touchstart", function (event) {
+            draggedItem = event.target.id;
+            event.preventDefault();
+        }, { passive: false });
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("dragover", function (event) {
+            event.preventDefault();
+        })
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("touchmove", function (event) {
+            event.preventDefault();
+        })
+    }, { passive: false });
+
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("drop", function (event) {
+            let droppedElement = document.getElementById(draggedItem);
+            let targetElement = event.target;
+            drop(droppedElement, targetElement);
+        })
+    });
+
+    document.querySelectorAll(".square").forEach(function (element) {
+        element.addEventListener("touchend", function (event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const touchEndY = event.changedTouches[0].clientY;
+            const targetElement = document.elementFromPoint(touchEndX, touchEndY);
+            let droppedElement = document.getElementById(draggedItem);
+            drop(droppedElement, targetElement);
+        })
+    });
 }
 
 function pullOneLetter() {
@@ -119,41 +169,60 @@ function updateHand() {
             squares[i].setAttribute("draggable", "true");
         }
     }
+    set_letter_behavior();
 }
 
-document.addEventListener("dragstart", function (event) {
-    event.dataTransfer.setData("DraggedItem", event.target.id);
-});
 
-document.addEventListener("touchstart", function (event) {
-    event.dataTransfer.setData("DraggedItem", event.target.id);
-});
 
-document.addEventListener("dragover", function (event) {
-    event.preventDefault();
-});
+function drop(droppedElement, targetElement) {
+    //let droppedElement = document.getElementById(draggedItem);
+    // TODO try this
+    // if (droppedElement.classList.contains("modified")) {
+    //     droppedElement.classList.remove('modified');
+    //     droppedElement.classList.remove('letter');
+    //     droppedElement.textContent = "";
+    //     let all_squares = document.querySelectorAll('.square');
+    //     let index = Array.from(all_squares).indexOf(droppedElement);
+    //     addCaseIndication(droppedElement, pattern[index]);
+    //     return
+    // }
 
-document.addEventListener("touchmove", function (event) {
-    event.preventDefault();
-});
+    if (targetElement == null) {
+        return
+    }
 
-document.addEventListener("drop", function (event) {
-    drop(event);
-});
+    if (targetElement.classList.contains("non-editable")) {
+        return
+    }
 
-document.addEventListener("touchend", function (event) {
-    drop(event);
-});
-
-function drop(event) {
-    let droppedElement = document.getElementById(event.dataTransfer.getData('DraggedItem'));
-    drop_letter = droppedElement.firstChild.nodeValue;
-    let targetElement = event.target;
-    if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square") && !targetElement.classList.contains("non-editable")) {
-        square_add_modified_letter(targetElement, drop_letter);
+    if (droppedElement == null && !targetElement.classList.contains("hand") && targetElement.classList.contains("letter")) {
+        targetElement.classList.remove('modified');
+        targetElement.classList.remove('letter');
+        targetElement.textContent = "";
+        let all_squares = document.querySelectorAll('.square');
+        let index = Array.from(all_squares).indexOf(targetElement);
+        addCaseIndication(targetElement, pattern[index]);
         updateHand();
         checkGridAndCalculateScore();
         update_letter_score();
+        return
+    }
+
+    if (droppedElement == null) {
+        return
+    }
+
+    if (droppedElement.classList.contains("used")) {
+        return;
+    }
+
+    let drop_letter = droppedElement.firstChild.nodeValue;
+    if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square") && !targetElement.classList.contains("non-editable")) {
+        square_add_modified_letter(targetElement, drop_letter, drop_letter.id);
+        updateHand();
+        checkGridAndCalculateScore();
+        update_letter_score();
+
     }
 
     if (targetElement.classList.contains("hand")) {
@@ -161,7 +230,6 @@ function drop(event) {
         let index_destination_letter = Array.from(all_squares).indexOf(targetElement);
         let index_dragged_letter = Array.from(all_squares).indexOf(droppedElement);
 
-        console.log(index_dragged_letter, index_destination_letter);
 
         let temp_base = hand_letters_base[index_destination_letter];
         let temp = hand_letters[index_destination_letter];
@@ -172,7 +240,6 @@ function drop(event) {
         hand_letters_base[index_dragged_letter] = temp_base;
         hand_letters[index_dragged_letter] = temp;
 
-        console.log(document.querySelectorAll('.hand'));
 
         let element1 = all_squares[index_destination_letter];
         let element2 = all_squares[index_dragged_letter];

@@ -49,7 +49,7 @@ function load_button() {
             else if (current_score >= 0.75 * max_point) {
                 emoji = emoji_75_pourcent;
             }
-            else if (current_score <= 0.1 * max_point) {
+            else if (current_score <= 0.4 * max_point) {
                 emoji = emoji_noob;
             }
 
@@ -68,9 +68,14 @@ function load_button() {
     });
 }
 
-function square_add_modified_letter(square, content) {
+function square_add_modified_letter(square, content, id) {
     square.classList.add('modified');
     square.classList.add('letter');
+    // square.setAttribute("draggable", "true");
+    // square.id = id
+    // TODO try this
+    // square.setAttribute("draggable", "true");
+    // square.id = `draggableItem_${square.id}`;
 
     // if (!square.querySelector('.score')) {
     //     let letterSpan = document.createElement("span");
@@ -199,7 +204,5 @@ function set_base_letters(square, i, j) {
         square.classList.add('non-editable');
         square.classList.add('default');
         square.classList.add('letter');
-        square.contentEditable = false;
-        square.removeAttribute('contenteditable');
     }
 }
