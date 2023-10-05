@@ -100,7 +100,7 @@
   font-size: 0.4vw;
   justify-content: center;
   align-items: center;
-  background-color: var(--contrast_custom_color);
+  background-color: var(--background_custom_color);
 }
 
 .square.white {
@@ -185,6 +185,15 @@
 }
 
 @media only screen and (max-width: 768px) {
+  :root {
+    --background_custom_color: rgb(70, 70, 70);
+    --contrast_custom_color: rgb(200, 200, 200);
+  }
+
+  .entire_window {
+    background-color: var(--background_custom_color);
+  }
+
   .container {
     width: 100%;
     display: flex;
@@ -193,6 +202,7 @@
     background-color: var(--contrast_custom_color);
     overflow-x: hidden;
     height: 100vh;
+    background-color: var(--background_custom_color);
   }
 
   .grid_container {
@@ -226,6 +236,7 @@
   #title {
     font-size: 3vw;
     font-weight: bold;
+    color: var(--contrast_custom_color);
   }
 
   #grid {
@@ -251,6 +262,7 @@
     width: 100%;
     font-size: 3vw;
     font-weight: bold;
+    color: var(--contrast_custom_color);
   }
 
   .square {
@@ -258,7 +270,7 @@
     font-size: 1vw;
     justify-content: center;
     align-items: center;
-    background-color: var(--contrast_custom_color);
+    background-color: var(--background_custom_color);
   }
 
   .square.white {
@@ -339,5 +351,7 @@
     width: 100%;
     font-size: 5vw;
     font-weight: bold;
+    color: var(--contrast_custom_color);
+    background-color: var(--background_custom_color);
   }
 }

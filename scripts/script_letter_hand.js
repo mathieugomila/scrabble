@@ -44,7 +44,6 @@ async function readWordsList() {
 
 async function loadWordsList() {
     words_list = await readWordsList();
-    console.log(words_list)
 }
 
 async function main() {
