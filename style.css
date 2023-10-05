@@ -1,10 +1,19 @@
+:root {
+  --background_custom_color: rgb(50, 50, 50);
+  --contrast_custom_color: rgb(200, 200, 200);
+}
+
+.entire_window {
+  background-color: var(--background_custom_color);
+}
+
 .container {
   width: 35vw;
   display: flex;
   align-items: center;
   flex-direction: column;
   margin: auto;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background_custom_color);
   justify-content: center;
 }
 
@@ -47,11 +56,18 @@
 
 #flush_button {
   margin-left: auto;
+  background-color: rgb(255, 255, 255);
+}
+
+#night_mode_button {
+  margin-left: auto;
+  background-color: rgb(153, 217, 234);
 }
 
 #title {
   font-size: 1.2vw;
   font-weight: bold;
+  color: var(--contrast_custom_color);
 }
 
 #grid {
@@ -76,23 +92,24 @@
   width: 100%;
   font-size: 0.8vw;
   font-weight: bold;
+  color: var(--contrast_custom_color);
 }
 
 .square {
-  border: 1px solid #000;
+  border: 1px solid var(--contrast_custom_color);
   font-size: 0.4vw;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--contrast_custom_color);
 }
 
 .square.white {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .square.cyan {
   background-color: rgb(5, 169, 190);
-  color: rgb(255, 255, 255);
+  color: rgb(61, 61, 61);
   white-space: pre-line;
   font-weight: bold;
   font-size: 0.4vw;
@@ -102,7 +119,7 @@
 
 .square.blue {
   background-color: rgb(53, 52, 136);
-  color: rgb(255, 255, 255);
+  color: rgb(192, 192, 192);
   font-weight: bold;
   font-size: 0.4vw;
   justify-content: center;
@@ -111,7 +128,7 @@
 
 .square.pink {
   background-color: rgb(245, 94, 165);
-  color: rgb(255, 255, 255);
+  color: rgb(61, 61, 61);
   font-weight: bold;
   font-size: 0.4vw;
   justify-content: center;
@@ -120,7 +137,7 @@
 
 .square.red {
   background-color: rgb(161, 8, 8);
-  color: rgb(255, 255, 255);
+  color: rgb(192, 192, 192);
   font-weight: bold;
   font-size: 0.4vw;
   justify-content: center;
@@ -152,7 +169,7 @@
 }
 
 .square.letter.used {
-  background-color: rgba(165, 170, 170, 0.1);
+  background-color: rgb(111, 117, 117);
 }
 
 .square.default {
@@ -163,6 +180,8 @@
   width: 100%;
   font-size: 0.8vw;
   font-weight: bold;
+  background-color: var(--background_custom_color);
+  color: var(--contrast_custom_color);
 }
 
 @media only screen and (max-width: 768px) {
@@ -171,7 +190,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--contrast_custom_color);
     overflow-x: hidden;
     height: 100vh;
   }
@@ -239,16 +258,16 @@
     font-size: 1vw;
     justify-content: center;
     align-items: center;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--contrast_custom_color);
   }
 
   .square.white {
-    background-color: rgb(255, 255, 255);
+    background-color: var(--contrast_custom_color);
   }
 
   .square.cyan {
     background-color: rgb(5, 169, 190);
-    color: rgb(255, 255, 255);
+    color: var(--contrast_custom_color);
     white-space: pre-line;
     font-weight: bold;
     font-size: 1vw;
@@ -258,7 +277,7 @@
 
   .square.blue {
     background-color: rgb(53, 52, 136);
-    color: rgb(255, 255, 255);
+    color: var(--contrast_custom_color);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
@@ -267,7 +286,7 @@
 
   .square.pink {
     background-color: rgb(245, 94, 165);
-    color: rgb(255, 255, 255);
+    color: var(--contrast_custom_color);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
@@ -276,7 +295,7 @@
 
   .square.red {
     background-color: rgb(161, 8, 8);
-    color: rgb(255, 255, 255);
+    color: var(--contrast_custom_color);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
