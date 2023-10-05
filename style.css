@@ -295,6 +295,7 @@
     right: 5px;
     bottom: 5px;
     font-size: 1.5vw;
+    pointer-events: none;
   }
 
   .square.letter.used {

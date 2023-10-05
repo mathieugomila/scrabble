@@ -110,7 +110,6 @@ function click_behaviour(event) {
         if (!event.target.classList.contains("hand") && event.target.classList.contains("modified")) {
             console.log(`remove letter ${event.target}`)
             remove_square(event.target)
-            updateHand()
         }
         // If first click on hand
         if (event.target.classList.contains("hand")) {
@@ -122,17 +121,16 @@ function click_behaviour(event) {
         if (!event.target.classList.contains("hand") && !event.target.classList.contains("letter")) {
             console.log(`add letter ${previous_letter_click}`)
             square_add_modified_letter(event.target, hand_letters_base[previous_letter_click])
-            updateHand()
             previous_letter_click = null
         }
         else if (event.target.classList.contains("hand")) {
             console.log(`switch letter position in hand ${previous_letter_click} --> ${event.target.id}`)
             // switch letters
             switch_letter(previous_letter_click, event.target.id)
-            updateHand()
             previous_letter_click = null
         }
     }
+    updateHand()
     checkGridAndCalculateScore()
     update_letter_score()
 }
