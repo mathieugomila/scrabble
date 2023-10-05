@@ -1,18 +1,27 @@
+:root {
+  --background_custom_color: rgb(70, 70, 70);
+  --contrast_custom_color: rgb(200, 200, 200);
+}
+
+.entire_window {
+  background-color: var(--background_custom_color);
+}
+
 .container {
   width: 35vw;
   display: flex;
   align-items: center;
   flex-direction: column;
   margin: auto;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background_custom_color);
   justify-content: center;
 }
 
-.title_container {
+.head_container {
   width: 90%;
   height: 5vh;
   display: flex;
-  justify-content: center;
+  justify-content: space_between;
   align-items: center;
   text-align: center;
 }
@@ -24,6 +33,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-color: var(--background_custom_color);
 }
 
 .hand_container {
@@ -43,6 +53,22 @@
   width: 80%;
   justify-content: center;
   align-items: center;
+}
+
+#flush_button {
+  margin-left: auto;
+  background-color: rgb(255, 255, 255);
+}
+
+#night_mode_button {
+  margin-left: auto;
+  background-color: rgb(153, 217, 234);
+}
+
+#title {
+  font-size: 1.2vw;
+  font-weight: bold;
+  color: var(--contrast_custom_color);
 }
 
 #grid {
@@ -67,23 +93,24 @@
   width: 100%;
   font-size: 0.8vw;
   font-weight: bold;
+  color: var(--contrast_custom_color);
 }
 
 .square {
-  border: 1px solid #000;
+  border: 1px solid var(--contrast_custom_color);
   font-size: 0.4vw;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background_custom_color);
 }
 
 .square.white {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .square.cyan {
   background-color: rgb(5, 169, 190);
-  color: rgb(255, 255, 255);
+  color: rgb(61, 61, 61);
   white-space: pre-line;
   font-weight: bold;
   font-size: 0.4vw;
@@ -93,7 +120,7 @@
 
 .square.blue {
   background-color: rgb(53, 52, 136);
-  color: rgb(255, 255, 255);
+  color: rgb(192, 192, 192);
   font-weight: bold;
   font-size: 0.4vw;
   justify-content: center;
@@ -102,7 +129,7 @@
 
 .square.pink {
   background-color: rgb(245, 94, 165);
-  color: rgb(255, 255, 255);
+  color: rgb(61, 61, 61);
   font-weight: bold;
   font-size: 0.4vw;
   justify-content: center;
@@ -111,7 +138,7 @@
 
 .square.red {
   background-color: rgb(161, 8, 8);
-  color: rgb(255, 255, 255);
+  color: rgb(192, 192, 192);
   font-weight: bold;
   font-size: 0.4vw;
   justify-content: center;
@@ -143,7 +170,7 @@
 }
 
 .square.letter.used {
-  background-color: rgba(165, 170, 170, 0.1);
+  background-color: rgb(111, 117, 117);
 }
 
 .square.default {
@@ -154,17 +181,28 @@
   width: 100%;
   font-size: 0.8vw;
   font-weight: bold;
+  background-color: var(--background_custom_color);
+  color: var(--contrast_custom_color);
 }
 
 @media only screen and (max-width: 768px) {
+  :root {
+    --background_custom_color: rgb(70, 70, 70);
+    --contrast_custom_color: rgb(200, 200, 200);
+  }
+
+  .entire_window {
+    background-color: var(--background_custom_color);
+  }
+
   .container {
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(255, 255, 255);
     overflow-x: hidden;
     height: 100vh;
+    background-color: var(--background_custom_color);
   }
 
   .grid_container {
@@ -174,6 +212,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    background-color: var(--background_custom_color);
   }
 
   .hand_container {
@@ -193,6 +232,12 @@
     width: 90%;
     justify-content: center;
     align-items: center;
+  }
+
+  #title {
+    font-size: 3vw;
+    font-weight: bold;
+    color: var(--contrast_custom_color);
   }
 
   #grid {
@@ -218,6 +263,7 @@
     width: 100%;
     font-size: 3vw;
     font-weight: bold;
+    color: var(--contrast_custom_color);
   }
 
   .square {
@@ -225,16 +271,16 @@
     font-size: 1vw;
     justify-content: center;
     align-items: center;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--background_custom_color);
   }
 
   .square.white {
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
   }
 
   .square.cyan {
     background-color: rgb(5, 169, 190);
-    color: rgb(255, 255, 255);
+    color: rgb(61, 61, 61);
     white-space: pre-line;
     font-weight: bold;
     font-size: 1vw;
@@ -244,7 +290,7 @@
 
   .square.blue {
     background-color: rgb(53, 52, 136);
-    color: rgb(255, 255, 255);
+    color: rgb(192, 192, 192);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
@@ -253,7 +299,7 @@
 
   .square.pink {
     background-color: rgb(245, 94, 165);
-    color: rgb(255, 255, 255);
+    color: rgb(61, 61, 61);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
@@ -262,7 +308,7 @@
 
   .square.red {
     background-color: rgb(161, 8, 8);
-    color: rgb(255, 255, 255);
+    color: rgb(192, 192, 192);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
@@ -291,6 +337,7 @@
     right: 5px;
     bottom: 5px;
     font-size: 1.5vw;
+    pointer-events: none;
   }
 
   .square.letter.used {
@@ -305,5 +352,7 @@
     width: 100%;
     font-size: 5vw;
     font-weight: bold;
+    color: var(--contrast_custom_color);
+    background-color: var(--background_custom_color);
   }
 }

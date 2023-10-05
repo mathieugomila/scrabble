@@ -11,7 +11,7 @@ let score = 0;
 
 let error_messages = []
 
-let draggedItem
+let previous_letter_click = null
 
 
 async function loadLetterCount() {
@@ -33,9 +33,12 @@ async function loadLetterScore() {
 
 
 async function readWordsList() {
-    const response = await fetch('data/ods6.txt');
+    const response = await fetch('data/ods8.txt');
     const data = await response.text();
     const words = data.split('\n');
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace('\r', '')
+    }
     return words;
 }
 
@@ -67,61 +70,86 @@ async function getSevenLetters() {
         square.textContent = daily_hand[i];
         square.classList.add('non-editable');
         square.classList.add('letter');
-        square.setAttribute("draggable", "true");
-        square.id = `draggableItem_${i}`;
+        square.id = i;
     }
 
     await loadLetterCount();
     update_letter_score();
-    set_letter_behavior();
+    add_click_detection();
 }
 
-function set_letter_behavior() {
-    document.querySelectorAll(".square").forEach(function (element) {
-        element.addEventListener("dragstart", function (event) {
-            draggedItem = event.target.id
-            event.dataTransfer.setData("DraggedItem", event.target.id);
-        })
-    });
+var flush_button = document.getElementById('flush_button');
 
-    document.querySelectorAll(".square").forEach(function (element) {
-        element.addEventListener("touchstart", function (event) {
-            draggedItem = event.target.id;
-            event.preventDefault();
-        }, { passive: false });
-    });
+flush_button.addEventListener('click', function () {
+    let modified_squares = document.querySelectorAll('.square.modified');
+    for (let i = 0; i < modified_squares.length; i++) {
+        const square = modified_squares[i];
+        remove_square(square)
+    }
+    updateHand()
+    checkGridAndCalculateScore()
+    update_letter_score()
+});
 
-    document.querySelectorAll(".square").forEach(function (element) {
-        element.addEventListener("dragover", function (event) {
-            event.preventDefault();
-        })
-    });
+function add_click_detection() {
 
-    document.querySelectorAll(".square").forEach(function (element) {
-        element.addEventListener("touchmove", function (event) {
-            event.preventDefault();
-        })
-    }, { passive: false });
+    let letters = document.getElementsByClassName('square');
 
 
-    document.querySelectorAll(".square").forEach(function (element) {
-        element.addEventListener("drop", function (event) {
-            let droppedElement = document.getElementById(draggedItem);
-            let targetElement = event.target;
-            drop(droppedElement, targetElement);
-        })
-    });
-
-    document.querySelectorAll(".square").forEach(function (element) {
-        element.addEventListener("touchend", function (event) {
-            const touchEndX = event.changedTouches[0].clientX;
-            const touchEndY = event.changedTouches[0].clientY;
-            const targetElement = document.elementFromPoint(touchEndX, touchEndY);
-            let droppedElement = document.getElementById(draggedItem);
-            drop(droppedElement, targetElement);
-        })
-    });
+    if (typeof window.ontouchstart !== 'undefined') {
+        for (var i = 0; i < letters.length; i++) {
+            letters[i].addEventListener('touchstart', click_behaviour);
+        }
+    } else {
+        for (var i = 0; i < letters.length; i++) {
+            letters[i].addEventListener('mousedown', click_behaviour);
+        }
+    }
 }
+
+function click_behaviour(event) {
+    if (previous_letter_click === null) {
+        // If letter from put by user
+        if (!event.target.classList.contains("hand") && event.target.classList.contains("modified")) {
+            console.log(`remove letter ${event.target}`)
+            remove_square(event.target)
+        }
+        // If first click on hand
+        if (event.target.classList.contains("hand")) {
+            console.log(`Click on letter in hand with index ${event.target.id}`)
+            previous_letter_click = event.target.id
+        }
+    }
+    else {
+        if (!event.target.classList.contains("hand") && !event.target.classList.contains("letter")) {
+            console.log(`add letter ${previous_letter_click}`)
+            square_add_modified_letter(event.target, hand_letters_base[previous_letter_click])
+            previous_letter_click = null
+        }
+        else if (event.target.classList.contains("hand")) {
+            console.log(`switch letter position in hand ${previous_letter_click} --> ${event.target.id}`)
+            // switch letters
+            switch_letter(previous_letter_click, event.target.id)
+            previous_letter_click = null
+        }
+    }
+    updateHand()
+    checkGridAndCalculateScore()
+    update_letter_score()
+}
+
+function remove_square(square) {
+    if (!square.classList.contains('modified')) {
+        return
+    }
+    square.classList.remove('modified');
+    square.classList.remove('letter');
+    let all_squares = document.querySelectorAll('.square');
+    let index = Array.from(all_squares).indexOf(square);
+    square.textContent = "";
+    addCaseIndication(square, pattern[index]);
+}
+
 
 function pullOneLetter() {
     let pool = [];
@@ -146,7 +174,7 @@ function pullOneLetter() {
 
 function updateHand() {
     // Search for leters in board and update hand
-    let squares = document.querySelectorAll('.square.hand');
+    let hand_squares = document.querySelectorAll('.square.hand');
     letter_modified = hand_letters_base.slice();
     error_messages = []
     let modified_squares = document.querySelectorAll('.square.modified');
@@ -160,99 +188,32 @@ function updateHand() {
         }
     }
     for (let i = 0; i < 7; i++) {
+        hand_squares[i].textContent = hand_letters[i]
         if (letter_modified[i] == ".") {
-            squares[i].classList.add('used');
-            squares[i].setAttribute("draggable", "false");
+            hand_squares[i].classList.add('used');
         }
         else {
-            squares[i].classList.remove('used');
-            squares[i].setAttribute("draggable", "true");
+            hand_squares[i].classList.remove('used');
         }
     }
-    set_letter_behavior();
+}
+
+function switch_letter(index_from, index_to) {
+    hand_letters_base_buffer = hand_letters_base[index_from]
+    hand_letters_base[index_from] = hand_letters_base[index_to]
+    hand_letters_base[index_to] = hand_letters_base_buffer
+
+    hand_letters_buffer = hand_letters[index_from]
+    hand_letters[index_from] = hand_letters[index_to]
+    hand_letters[index_to] = hand_letters_buffer
+
+    letter_modified_buffer = letter_modified[index_from]
+    letter_modified[index_from] = letter_modified[index_to]
+    letter_modified[index_to] = letter_modified_buffer
+
+    checkGridAndCalculateScore();
+    update_letter_score();
 }
 
 
 
-function drop(droppedElement, targetElement) {
-    //let droppedElement = document.getElementById(draggedItem);
-    // TODO try this
-    // if (droppedElement.classList.contains("modified")) {
-    //     droppedElement.classList.remove('modified');
-    //     droppedElement.classList.remove('letter');
-    //     droppedElement.textContent = "";
-    //     let all_squares = document.querySelectorAll('.square');
-    //     let index = Array.from(all_squares).indexOf(droppedElement);
-    //     addCaseIndication(droppedElement, pattern[index]);
-    //     return
-    // }
-
-    if (targetElement == null) {
-        return
-    }
-
-    if (targetElement.classList.contains("non-editable")) {
-        return
-    }
-
-    if (droppedElement == null && !targetElement.classList.contains("hand") && targetElement.classList.contains("letter")) {
-        targetElement.classList.remove('modified');
-        targetElement.classList.remove('letter');
-        targetElement.textContent = "";
-        let all_squares = document.querySelectorAll('.square');
-        let index = Array.from(all_squares).indexOf(targetElement);
-        addCaseIndication(targetElement, pattern[index]);
-        updateHand();
-        checkGridAndCalculateScore();
-        update_letter_score();
-        return
-    }
-
-    if (droppedElement == null) {
-        return
-    }
-
-    if (droppedElement.classList.contains("used")) {
-        return;
-    }
-
-    let drop_letter = droppedElement.firstChild.nodeValue;
-    if (!targetElement.classList.contains("hand") && targetElement.classList.contains("square") && !targetElement.classList.contains("non-editable")) {
-        square_add_modified_letter(targetElement, drop_letter, drop_letter.id);
-        updateHand();
-        checkGridAndCalculateScore();
-        update_letter_score();
-
-    }
-
-    if (targetElement.classList.contains("hand")) {
-        let all_squares = document.querySelectorAll('.hand');
-        let index_destination_letter = Array.from(all_squares).indexOf(targetElement);
-        let index_dragged_letter = Array.from(all_squares).indexOf(droppedElement);
-
-
-        let temp_base = hand_letters_base[index_destination_letter];
-        let temp = hand_letters[index_destination_letter];
-
-        hand_letters_base[index_destination_letter] = hand_letters_base[index_dragged_letter];
-        hand_letters[index_destination_letter] = hand_letters[index_dragged_letter];
-
-        hand_letters_base[index_dragged_letter] = temp_base;
-        hand_letters[index_dragged_letter] = temp;
-
-
-        let element1 = all_squares[index_destination_letter];
-        let element2 = all_squares[index_dragged_letter];
-
-        let parent = element1.parentNode;
-        let clone1 = element1.cloneNode(true);
-        let clone2 = element2.cloneNode(true);
-
-        element1.replaceWith(clone2);
-        element2.replaceWith(clone1);
-
-        updateHand();
-        checkGridAndCalculateScore();
-        update_letter_score();
-    }
-}

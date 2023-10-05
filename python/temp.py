@@ -1,5 +1,5 @@
 # Ouvrir les fichiers et lire les mots
-with open("data/francais_10000.txt", "r") as f1, open("data/ods6.txt", "r") as f2:
+with open("data/francais_10000.txt", "r") as f1, open("data/ods8.txt", "r") as f2:
     words1 = f1.read().splitlines()
     words2 = f2.read().splitlines()
 

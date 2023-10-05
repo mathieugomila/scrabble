@@ -20,6 +20,7 @@ let emoji_max = "🏆🏆🏆";
 let emoji_90_pourcent = "🥵🥵🥵";
 let emoji_75_pourcent = "🤒🤒🤒";
 let emoji_noob = "🤣🤣👎👎🤣🤣"
+let emoji_default = "🥱🥱😐😐🥱🥱"
 
 
 const colors = { ".": 'white', "3": "red", "2": "pink", "b": "cyan", "c": "blue" };
@@ -27,7 +28,6 @@ const colors = { ".": 'white', "3": "red", "2": "pink", "b": "cyan", "c": "blue"
 const grid = document.getElementById('grid');
 
 load_button();
-square_movement_arrow();
 
 function load_button() {
     document.getElementById("validateButton").addEventListener("click", async function () {
@@ -36,7 +36,7 @@ function load_button() {
 
 
             let max_point = best_score_possible_dict["score"];
-            emoji = ""
+            emoji = emoji_default
             if (current_score > max_point) {
                 emoji = emoji_above_max;
             }
@@ -68,21 +68,9 @@ function load_button() {
     });
 }
 
-function square_add_modified_letter(square, content, id) {
+function square_add_modified_letter(square, content) {
     square.classList.add('modified');
     square.classList.add('letter');
-    // square.setAttribute("draggable", "true");
-    // square.id = id
-    // TODO try this
-    // square.setAttribute("draggable", "true");
-    // square.id = `draggableItem_${square.id}`;
-
-    // if (!square.querySelector('.score')) {
-    //     let letterSpan = document.createElement("span");
-    //     letterSpan.classList.add("score");
-    //     square.appendChild(letterSpan);
-    //     square.querySelector(".score").textContent = scrabble_letter_score[square.firstChild.nodeValue];
-    // }
 
     if (!square.firstChild) {
         square.textContent = "coucou";
@@ -101,83 +89,8 @@ function square_add_modified_letter(square, content, id) {
     range.collapse(true);
     sel.removeAllRanges();
     sel.addRange(range);
-
-
 }
 
-function square_input(square, e) {
-    if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward') {
-        square.classList.remove('modified');
-        square.classList.remove('letter');
-        square.textContent = "";
-        return;
-    }
-
-
-    square.firstChild.nodeValue = square.firstChild.nodeValue.toUpperCase();
-    if (letter_modified.includes(square.firstChild.nodeValue[square.firstChild.nodeValue.length - 1]) || (square.firstChild.nodeValue.length > 1 && square.firstChild.nodeValue[0] == square.firstChild.nodeValue[1])) {
-
-
-
-        square_add_modified_letter(square, square.firstChild.nodeValue);
-
-
-    }
-    else {
-        square.classList.remove('modified');
-        square.classList.remove('letter');
-        let all_squares = document.querySelectorAll('.square');
-        let index = Array.from(all_squares).indexOf(square);
-        square.textContent = "";
-        addCaseIndication(square, pattern[index]);
-    }
-
-    if (square.classList.contains("letters") && (firstChild.nodeValue.trim() == '' || square.firstChild.nodeValue.length > 1)) {
-        square.classList.remove('modified');
-        square.classList.remove('letter');
-        let all_squares = document.querySelectorAll('.square');
-        let index = Array.from(all_squares).indexOf(square);
-        square.textContent = "";
-        addCaseIndication(square, pattern[index]);
-    }
-
-
-}
-
-function square_click(square) {
-    if (square.classList.contains('modified')) {
-        square.classList.remove('modified');
-        square.classList.remove('letter');
-        let all_squares = document.querySelectorAll('.square');
-        let index = Array.from(all_squares).indexOf(square);
-        square.textContent = "";
-        addCaseIndication(square, pattern[index]);
-    }
-    square.focus();
-}
-
-function square_movement_arrow() {
-    document.addEventListener('keydown', function (e) {
-        let squares = document.querySelectorAll('.square');
-
-        let focused = document.activeElement;
-        let index = Array.from(squares).indexOf(focused);
-
-        if (index !== -1) {
-            let nextIndex;
-            switch (e.key) {
-                case 'ArrowUp': nextIndex = index - 15; break;
-                case 'ArrowDown': nextIndex = index + 15; break;
-                case 'ArrowLeft': nextIndex = index - 1; break;
-                case 'ArrowRight': nextIndex = index + 1; break;
-            }
-
-            if (nextIndex >= 0 && nextIndex < squares.length) {
-                squares[nextIndex].focus();
-            }
-        }
-    });
-}
 
 function update_letter_score() {
     let squares = document.querySelectorAll('.square');
@@ -205,4 +118,43 @@ function set_base_letters(square, i, j) {
         square.classList.add('default');
         square.classList.add('letter');
     }
+}
+
+var dark_value_bg = 70
+var dark_value_contrast = 200
+var light_value_bg = 255
+var light_value_contrast = 50
+var is_night = false;
+
+
+var night_mode_button = document.getElementById('night_mode_button');
+
+night_mode_button.addEventListener('click', function () {
+    is_night = !is_night
+    change_theme_color(is_night)
+});
+
+function change_theme_color(is_night_mode) {
+    let root = document.documentElement;
+
+    if (is_night_mode) {
+        root.style.setProperty('--background_custom_color', `rgb(${dark_value_bg}, ${dark_value_bg}, ${dark_value_bg})`);
+        root.style.setProperty('--contrast_custom_color', `rgb(${dark_value_contrast}, ${dark_value_contrast}, ${dark_value_contrast})`);
+        document.getElementById('night_mode_button_image').src = "images/day.png"
+        document.getElementById('night_mode_button').style.backgroundColor = "rgb(153, 217, 234)"
+    }
+
+    else {
+        root.style.setProperty('--background_custom_color', `rgb(${light_value_bg}, ${light_value_bg}, ${light_value_bg})`);
+        root.style.setProperty('--contrast_custom_color', `rgb(${light_value_contrast}, ${light_value_contrast}, ${light_value_contrast})`);
+        document.getElementById('night_mode_button_image').src = "images/night.png"
+        document.getElementById('night_mode_button').style.backgroundColor = "rgb(0, 0, 0)"
+    }
+}
+
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    is_night = true
+    change_theme_color(is_night)
+} else {
+    change_theme_color(is_night)
 }
