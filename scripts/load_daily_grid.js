@@ -45,13 +45,6 @@ async function create_grid() {
             addCaseIndication(square, pattern[j + 15 * i]);
             square.className = `square ${color}`;
             square.setAttribute('tabindex', '0');
-            square.addEventListener('click', function () {
-                square_click(square);
-                updateHand();
-                checkGridAndCalculateScore();
-                square.focus();
-                update_letter_score();
-            });
 
             set_base_letters(square, i, j);
 
@@ -69,7 +62,7 @@ async function main() {
     daily_hand = daily_grid_json["today"]["hand"];
     best_score_possible_dict = daily_grid_json["today"]["solution"];
     create_grid()
-    document.getElementById("title").querySelector('h2').innerText = `SCRABBLEBLE n°${day_counter}`
+    document.getElementById("title").querySelector('h2').innerText = `SCRABBLEBLE n°${day_counter} [max simple: ${best_score_possible_dict["score"]}]`
 }
 
 main();

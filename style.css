@@ -8,11 +8,11 @@
   justify-content: center;
 }
 
-.title_container {
+.head_container {
   width: 90%;
   height: 5vh;
   display: flex;
-  justify-content: center;
+  justify-content: space_between;
   align-items: center;
   text-align: center;
 }
@@ -43,6 +43,10 @@
   width: 80%;
   justify-content: center;
   align-items: center;
+}
+
+#flush_button {
+  margin-left: auto; /* Poussez le bouton vers la droite */
 }
 
 #grid {
