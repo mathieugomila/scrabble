@@ -120,20 +120,24 @@ function set_base_letters(square, i, j) {
     }
 }
 
-var dark_value_bg = 50
+var dark_value_bg = 70
 var dark_value_contrast = 200
 var light_value_bg = 255
 var light_value_contrast = 50
-var is_night = true;
+var is_night = false;
 
 
 var night_mode_button = document.getElementById('night_mode_button');
 
 night_mode_button.addEventListener('click', function () {
-    let root = document.documentElement;
     is_night = !is_night
+    change_theme_color(is_night)
+});
 
-    if (is_night) {
+function change_theme_color(is_night_mode) {
+    let root = document.documentElement;
+
+    if (is_night_mode) {
         root.style.setProperty('--background_custom_color', `rgb(${dark_value_bg}, ${dark_value_bg}, ${dark_value_bg})`);
         root.style.setProperty('--contrast_custom_color', `rgb(${dark_value_contrast}, ${dark_value_contrast}, ${dark_value_contrast})`);
         document.getElementById('night_mode_button_image').src = "images/day.png"
@@ -146,4 +150,11 @@ night_mode_button.addEventListener('click', function () {
         document.getElementById('night_mode_button_image').src = "images/night.png"
         document.getElementById('night_mode_button').style.backgroundColor = "rgb(0, 0, 0)"
     }
-});
+}
+
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    is_night = true
+    change_theme_color(is_night)
+} else {
+    change_theme_color(is_night)
+}
