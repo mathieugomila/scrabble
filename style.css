@@ -33,6 +33,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-color: var(--background_custom_color);
 }
 
 .hand_container {
@@ -199,7 +200,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: var(--contrast_custom_color);
     overflow-x: hidden;
     height: 100vh;
     background-color: var(--background_custom_color);
@@ -212,6 +212,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    background-color: var(--background_custom_color);
   }
 
   .hand_container {
@@ -274,12 +275,12 @@
   }
 
   .square.white {
-    background-color: var(--contrast_custom_color);
+    background-color: rgba(255, 255, 255, 0);
   }
 
   .square.cyan {
     background-color: rgb(5, 169, 190);
-    color: var(--contrast_custom_color);
+    color: rgb(61, 61, 61);
     white-space: pre-line;
     font-weight: bold;
     font-size: 1vw;
@@ -289,7 +290,7 @@
 
   .square.blue {
     background-color: rgb(53, 52, 136);
-    color: var(--contrast_custom_color);
+    color: rgb(192, 192, 192);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
@@ -298,7 +299,7 @@
 
   .square.pink {
     background-color: rgb(245, 94, 165);
-    color: var(--contrast_custom_color);
+    color: rgb(61, 61, 61);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
@@ -307,7 +308,7 @@
 
   .square.red {
     background-color: rgb(161, 8, 8);
-    color: var(--contrast_custom_color);
+    color: rgb(192, 192, 192);
     font-weight: bold;
     font-size: 1vw;
     justify-content: center;
