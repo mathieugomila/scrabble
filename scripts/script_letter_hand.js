@@ -35,12 +35,16 @@ async function loadLetterScore() {
 async function readWordsList() {
     const response = await fetch('data/ods8.txt');
     const data = await response.text();
-    const words = data.split('\n').split('\r');
+    const words = data.split('\n');
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace('\r', '')
+    }
     return words;
 }
 
 async function loadWordsList() {
     words_list = await readWordsList();
+    console.log(words_list)
 }
 
 async function main() {
