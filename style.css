@@ -46,7 +46,12 @@
 }
 
 #flush_button {
-  margin-left: auto; /* Poussez le bouton vers la droite */
+  margin-left: auto;
+}
+
+#title {
+  font-size: 1.2vw;
+  font-weight: bold;
 }
 
 #grid {
@@ -197,6 +202,11 @@
     width: 90%;
     justify-content: center;
     align-items: center;
+  }
+
+  #title {
+    font-size: 3vw;
+    font-weight: bold;
   }
 
   #grid {
