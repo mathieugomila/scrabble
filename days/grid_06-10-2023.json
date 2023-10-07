@@ -1,0 +1,11 @@
+{
+  "grid": ".........H.............GARDIEN.........T.............DE..P.....MINUTE...E..........TARDIF.........T...N.......OISEAU.E.........O..............E.............TUNNEL.......AMER....................................................",
+  "hand": ["B", "H", "Y", "E", "M", "N", "R"],
+  "solution": {
+    "word": "undefined",
+    "position": [12, 1],
+    "direction": "right",
+    "score": "undefined",
+    "pulled_letters": ["H", "Y", "M", "N", "E"]
+  }
+}

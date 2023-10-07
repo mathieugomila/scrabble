@@ -19,15 +19,16 @@
 
 .head_container {
   width: 90%;
-  height: 5vh;
+  height: 3vh;
   display: flex;
   justify-content: space_between;
   align-items: center;
   text-align: center;
+  padding-bottom: 0.5vh;
 }
 
 .grid_container {
-  width: 100%;
+  width: 90%;
   aspect-ratio: 1 / 1;
   display: flex;
   justify-content: center;
@@ -65,6 +66,16 @@
   background-color: rgb(153, 217, 234);
 }
 
+#flush_button img {
+  width: 2vh;
+  height: 2vh;
+}
+
+#night_mode_button img {
+  width: 2vh;
+  height: 2vh;
+}
+
 #title {
   font-size: 1.2vw;
   font-weight: bold;
@@ -90,6 +101,13 @@
 }
 
 #errorText {
+  width: 100%;
+  font-size: 0.8vw;
+  font-weight: bold;
+  color: var(--contrast_custom_color);
+}
+
+#yesterdayAnswer {
   width: 100%;
   font-size: 0.8vw;
   font-weight: bold;
@@ -206,7 +224,7 @@
   }
 
   .grid_container {
-    width: 100%;
+    width: 90%;
     aspect-ratio: 1 / 1;
     display: flex;
     justify-content: center;
@@ -216,7 +234,8 @@
   }
 
   .hand_container {
-    height: 5vw;
+    margin-top: 1vw;
+    height: 8vw;
     width: 100%;
   }
 
@@ -242,9 +261,9 @@
 
   #grid {
     display: grid;
-    grid-template-columns: repeat(15, 6vw);
-    grid-auto-rows: 6vw;
-    grid-auto-columns: 6vw;
+    grid-template-columns: repeat(15, 5.8vw);
+    grid-auto-rows: 5.8vw;
+    grid-auto-columns: 5.8vw;
     grid-gap: 0.5vw;
   }
 
@@ -261,7 +280,14 @@
 
   #errorText {
     width: 100%;
-    font-size: 3vw;
+    font-size: 2vw;
+    font-weight: bold;
+    color: var(--contrast_custom_color);
+  }
+
+  #yesterdayAnswer {
+    width: 100%;
+    font-size: 2vw;
     font-weight: bold;
     color: var(--contrast_custom_color);
   }
@@ -332,6 +358,18 @@
     overflow: visible;
   }
 
+  .square.letter_solution {
+    background-color: rgb(42, 122, 5);
+    box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.9);
+    color: rgb(0, 0, 0);
+    font-weight: normal;
+    border-radius: 15%;
+    transform: rotate(3deg);
+    font-size: 4vw;
+    display: flex;
+    overflow: visible;
+  }
+
   .score {
     position: absolute;
     right: 5px;
@@ -350,7 +388,7 @@
 
   #validateButton {
     width: 100%;
-    font-size: 5vw;
+    font-size: 3vw;
     font-weight: bold;
     color: var(--contrast_custom_color);
     background-color: var(--background_custom_color);

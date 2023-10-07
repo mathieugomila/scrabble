@@ -41,8 +41,7 @@ function checkGridAndCalculateScore() {
         document.getElementById("validateButton").firstChild.nodeValue = "Positionnez vos lettres"
     }
 
-    let modifiedMessages = error_messages.map(msg => "&nbsp;&nbsp;&nbsp;&nbsp;-" + msg);
-    document.getElementById("errorText").innerHTML = "<u>Informations :</u><br>" + modifiedMessages.join("<br>");
+    document.getElementById("errorText").innerHTML = "<u>Informations</u> :" + error_messages.join(", ");
 }
 
 function getModifiedIndex() {

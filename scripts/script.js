@@ -110,16 +110,6 @@ function update_letter_score() {
 }
 
 
-
-function set_base_letters(square, i, j) {
-    if (daily_grid[i * 15 + j] != ".") {
-        square.textContent = daily_grid[i * 15 + j];
-        square.classList.add('non-editable');
-        square.classList.add('default');
-        square.classList.add('letter');
-    }
-}
-
 var dark_value_bg = 70
 var dark_value_contrast = 200
 var light_value_bg = 255

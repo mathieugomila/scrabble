@@ -104,7 +104,9 @@ class Game:
         ## this is to pick a random first word to be put on the grid ##
         dico_l = list(self.gen_dico)
         hand = self.player_hands[player]
-        while True:
+        loop_count = 10000
+        while True and loop_count > 0:
+            loop_count -= 1
             hand_2 = hand.copy()
             ridx = randrange(len(dico_l))
             ok = True
@@ -120,6 +122,8 @@ class Game:
                     hand.remove(l)
                 break
         ## ##
+        if loop_count == 0:
+            return
 
         ## now select a random direction and offset and put the word on the grid ##
         random_dir = choice(tuple(Direction))
@@ -145,7 +149,9 @@ class Game:
         else:
             hand = self.player_hands[player]
             matches = solve(self.grid, hand, self.gen_dico)
-            rand_match = max(matches, key=lambda match: len(match.pulled_letters))  # get a word with as many pulled letters as possible
+            rand_match = max(
+                matches, key=lambda match: len(match.pulled_letters)
+            )  # get a word with as many pulled letters as possible
             # rand_match = choice(matches)
             for k, letter in enumerate(rand_match.word):
                 if rand_match.direction == Direction.LR:
@@ -181,8 +187,19 @@ class Game:
         return d
 
 
+from datetime import datetime, timedelta
+
+
+def generate_dates(start_date, day):
+    date_format = "%d-%m-%Y"
+    start = datetime.strptime(start_date, date_format)
+    return (start + timedelta(days=day)).strftime(date_format)
+
+
 if __name__ == "__main__":
     nbr_day = 0
+    first_day = "13-10-2023"
+    day = 0
     while True:
         try:
             print(nbr_day)
@@ -197,11 +214,18 @@ if __name__ == "__main__":
                 grid_json["solution"]["score"] > 30
                 and len(grid_json["solution"]["pulled_letters"]) > 2
             ):
-                for day in range(0, 10000):
-                    if not Path(f"days/grid_{day}.json").exists():
-                        with open(f"days/grid_{day}.json", "w") as f:
-                            json.dump(grid_json, f, cls=NumpyEncoder)
-                        break
+                print("good grid, searching for best possible score")
+                best_solutions = solve(
+                    game.grid, game.player_hands[0], Dictionary("data/ods8.txt")
+                )
+                best_score = best_solutions[-1].score
+                best_word = best_solutions[-1].word
+                grid_json["solution"]["best_score"] = best_score
+                grid_json["solution"]["best_word"] = best_word
+                date = generate_dates(first_day, day)
+                with Path(f"days/grid_{date}.json").open("w") as file:
+                    json.dump(grid_json, file, cls=NumpyEncoder)
+                day += 1
             else:
                 print(
                     "Not good enough",
@@ -211,3 +235,7 @@ if __name__ == "__main__":
             nbr_day += 1
         except Exception as e:
             print(str(e))
+
+
+# dates = generate_dates("2023-12-30")
+# print(dates)
