@@ -24,6 +24,7 @@
   justify-content: space_between;
   align-items: center;
   text-align: center;
+  padding-top: 0.5vh;
   padding-bottom: 0.5vh;
 }
 
