@@ -1,0 +1,13 @@
+{
+  "grid": "....A..............G.............LE.............I.M.T........QUETE.E..........R.T.NOUS........DELA..O.........O.NU.U...........T..P..N...........ENVOI.............I.........AMUSER..............................................",
+  "hand": ["H", "F", "I", "A", "R", "C", "P"],
+  "solution": {
+    "word": "TRAFIC",
+    "position": [3, 7],
+    "direction": "right",
+    "score": 22,
+    "pulled_letters": ["R", "A", "F", "I", "C"],
+    "best_score": 54,
+    "best_word": "FACHAI"
+  }
+}

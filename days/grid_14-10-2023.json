@@ -1,1 +1,13 @@
-{"grid": "........................R..............E..............G..............I.............NOYAU...........N.B.........BON..A........R.SELON...PRETRE.....D........S..Q..O........E..USINE.......A..E...........UTILE....................", "hand": ["Z", "F", "A", "H", "A", "C", "I"], "solution": {"word": "CHEZ", "position": [11, 3], "direction": "right", "score": 36, "pulled_letters": ["C", "H", "Z"], "best_score": 56, "best_word": "FACHIEZ"}}
+{
+  "grid": "........................R..............E..............G..............I.............NOYAU...........N.B.........BON..A........R.SELON...PRETRE.....D........S..Q..O........E..USINE.......A..E...........UTILE....................",
+  "hand": ["Z", "F", "A", "H", "A", "C", "I"],
+  "solution": {
+    "word": "CHEZ",
+    "position": [11, 3],
+    "direction": "right",
+    "score": 36,
+    "pulled_letters": ["C", "H", "Z"],
+    "best_score": 56,
+    "best_word": "FACHIEZ"
+  }
+}

@@ -3,7 +3,7 @@
   --contrast_custom_color: rgb(200, 200, 200);
 }
 
-.entire_window {
+body {
   background-color: var(--background_custom_color);
 }
 
