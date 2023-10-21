@@ -117,7 +117,7 @@ body {
 }
 
 .square {
-  border: 1px solid var(--contrast_custom_color);
+  border: 1px solid #000;
   font-size: 0.4vw;
   justify-content: center;
   align-items: center;
@@ -170,7 +170,7 @@ body {
 }
 
 .square.letter {
-  background-color: rgb(240, 220, 157);
+  background-color: rgb(240, 218, 148);
   box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.9);
   color: rgb(0, 0, 0);
   font-weight: normal;
@@ -198,7 +198,7 @@ body {
 }
 
 .square.default {
-  background-color: rgb(184, 169, 115);
+  background-color: rgb(192, 176, 120);
 }
 
 #validateButton {
