@@ -118,7 +118,6 @@ function previous_solution_text() {
         }
         yesterday_solution_text += "\n"
     }
-    console.log(yesterday_solution_text)
 }
 
 async function main() {

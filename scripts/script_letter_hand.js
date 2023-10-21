@@ -89,6 +89,8 @@ flush_button.addEventListener('click', function () {
     updateHand()
     checkGridAndCalculateScore()
     update_letter_score()
+    previous_letter_click = null
+    removeClickIndicator()
 });
 
 function add_click_detection() {
@@ -109,7 +111,7 @@ function add_click_detection() {
 
 function click_behaviour(event) {
     if (previous_letter_click === null) {
-        // If letter from put by user
+        // If click on letter on grid
         if (!event.target.classList.contains("hand") && event.target.classList.contains("modified")) {
             console.log(`remove letter ${event.target}`)
             remove_square(event.target)
@@ -118,6 +120,7 @@ function click_behaviour(event) {
         if (event.target.classList.contains("hand")) {
             console.log(`Click on letter in hand with index ${event.target.id}`)
             previous_letter_click = event.target.id
+            firstClickIndicator(previous_letter_click)
         }
     }
     else {
@@ -125,12 +128,14 @@ function click_behaviour(event) {
             console.log(`add letter ${previous_letter_click}`)
             square_add_modified_letter(event.target, hand_letters_base[previous_letter_click])
             previous_letter_click = null
+            removeClickIndicator()
         }
         else if (event.target.classList.contains("hand")) {
             console.log(`switch letter position in hand ${previous_letter_click} --> ${event.target.id}`)
             // switch letters
             switch_letter(previous_letter_click, event.target.id)
             previous_letter_click = null
+            removeClickIndicator()
         }
     }
     updateHand()
@@ -196,6 +201,20 @@ function updateHand() {
             hand_squares[i].classList.remove('used');
         }
     }
+}
+
+function removeClickIndicator() {
+    let hand_squares = document.querySelectorAll('.square.hand');
+    for (let i = 0; i < 7; i++) {
+        hand_squares[i].classList.remove('first_click');
+    }
+}
+
+function firstClickIndicator(click_index) {
+    // Search for leters in board and update hand
+    let hand_squares = document.querySelectorAll('.square.hand');
+    removeClickIndicator()
+    hand_squares[click_index].classList.add('first_click');
 }
 
 function switch_letter(index_from, index_to) {

@@ -39,6 +39,7 @@ body {
 }
 
 .hand_container {
+  margin-top: 0.8vh;
   height: 5vh;
   width: 100%;
 }
@@ -190,6 +191,10 @@ body {
 
 .square.letter.used {
   background-color: rgb(111, 117, 117);
+}
+
+.square.letter.first_click {
+  border: 2px solid red;
 }
 
 .square.default {
