@@ -110,12 +110,12 @@ function add_click_detection() {
 }
 
 function click_behaviour(event) {
-    if (previous_letter_click === null) {
-        // If click on letter on grid
-        if (!event.target.classList.contains("hand") && event.target.classList.contains("modified")) {
-            console.log(`remove letter ${event.target}`)
-            remove_square(event.target)
+    // If click on letter on grid
+    if (!event.target.classList.contains("hand") && event.target.classList.contains("modified")) {
+        console.log(`remove letter ${event.target}`)
+        remove_square(event.target)
         }
+    if (previous_letter_click == null){
         // If first click on hand
         if (event.target.classList.contains("hand")) {
             console.log(`Click on letter in hand with index ${event.target.id}`)
