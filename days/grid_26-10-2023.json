@@ -1,1 +1,13 @@
-{"grid": "........P............MOIS...........O.S.......A..AIDE........I....E.........LECTURE........ET...N..........A...EUX......SALUT............E............MARIER.............U..............R..............O.........................", "hand": ["F", "Y", "H", "I", "N", "B", "E"], "solution": {"word": "YEN", "position": [1, 2], "direction": "down", "score": 26, "pulled_letters": ["Y", "E", "N"], "best_score": 48, "best_word": "BIEF"}}
+{
+  "grid": "..........................Q..............U.....V....M...A.....I....A...T....ANNIVERSAIRE....G....I...E.....T.JOYEUX..........C..............T..............O..............B..............R...........ANNEES......................",
+  "hand": ["O", "L", "D", "S", "T", "E", "R"],
+  "solution": {
+    "word": "DOSE",
+    "position": [11, 7],
+    "direction": "down",
+    "score": 21,
+    "pulled_letters": ["D", "O", "E"],
+    "best_score": 86,
+    "best_word": "DORLOTES"
+  }
+}
