@@ -127,7 +127,7 @@ async function main() {
     daily_hand = daily_grid_json["today"]["hand"];
     best_score_possible_dict = daily_grid_json["today"]["solution"];
     create_grid()
-    document.getElementById("title").textContent = `SCRABBLEBLE n°${day_counter} [+: ${best_score_possible_dict["score"]}, ++: ${best_score_possible_dict["best_score"]}]`
+    document.getElementById("title").textContent = `POUBELLEBELLE n°${day_counter} [+: ${best_score_possible_dict["score"]}, ++: ${best_score_possible_dict["best_score"]}]`
 
     yesterday_word = daily_grid_json["yesterday"]["solution"]["word"]
     yesterday_score = daily_grid_json["yesterday"]["solution"]["score"]
