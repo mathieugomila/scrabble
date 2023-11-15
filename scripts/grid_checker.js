@@ -44,7 +44,7 @@ function checkNoEmptyBetween(squares) {
         for (let col = minCol; col <= maxCol; col++) {
             const index = row * 15 + col;
             const square = squares[index];
-            if (!square.classList.contains('modified') || !square.classList.contains('non-editable')) {
+            if (!square.classList.contains('letter')) {
                 return false; // Case vide trouvée
             }
         }
