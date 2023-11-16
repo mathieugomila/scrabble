@@ -1,4 +1,4 @@
-8daily_grid = ''
+daily_grid = ''
 daily_hand = []
 best_score_possible_dict = {}
 day_counter = 0
