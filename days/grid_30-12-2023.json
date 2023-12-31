@@ -2,12 +2,12 @@
   "grid": "...........................................H..............O............C.N............O.T..........SONGER.......MOI.T.......VISA..LISTE.......N...N.......SALUER.U...TITRE..E.............ALARME.................................",
   "hand": ["X", "O", "E", "E", "L", "D", "O"],
   "solution": {
-    "word": "EXODE",
+    "word": "---",
     "position": [13, 10],
     "direction": "right",
-    "score": 44,
+    "score": "oups c'était buggé",
     "pulled_letters": ["E", "X", "O", "D", "E"],
-    "best_score": 52,
-    "best_word": "EXODE"
+    "best_score": "oups c'était buggé",
+    "best_word": "---"
   }
 }
