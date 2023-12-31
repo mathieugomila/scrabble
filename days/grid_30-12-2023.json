@@ -1,13 +1,1 @@
-{
-  "grid": "...........................................H..............O............C.N............O.T..........SONGER.......MOI.T.......VISA..LISTE.......N...N.......SALUER.U...TITRE..E.............ALARME.................................",
-  "hand": ["X", "O", "E", "E", "L", "D", "O"],
-  "solution": {
-    "word": "---",
-    "position": [13, 10],
-    "direction": "right",
-    "score": "oups c'était buggé",
-    "pulled_letters": ["E", "X", "O", "D", "E"],
-    "best_score": "oups c'était buggé",
-    "best_word": "---"
-  }
-}
+{"grid": "...................................................NATAL........F....C..A......O.A..C..U......N.D..E..T....P.D.MAIS..O...GRIS.I.....U....O...RETENIR...VIABLE..........E...R.....................................................", "hand": ["J", "I", "G", "A", "U", "B", "E"], "solution": {"word": "JOUE", "position": [7, 11], "direction": "right", "score": 57, "pulled_letters": ["J", "U", "E"], "best_score": 60, "best_word": "JOUG"}}
