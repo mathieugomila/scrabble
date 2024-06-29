@@ -114,10 +114,10 @@ function click_behaviour(event) {
     if (!event.target.classList.contains("hand") && event.target.classList.contains("modified")) {
         console.log(`remove letter ${event.target}`)
         remove_square(event.target)
-        }
-    if (previous_letter_click == null){
+    }
+    if (previous_letter_click == null) {
         // If first click on hand
-        if (event.target.classList.contains("hand")) {
+        if (event.target.classList.contains("hand") && !event.target.classList.contains("used")) {
             console.log(`Click on letter in hand with index ${event.target.id}`)
             previous_letter_click = event.target.id
             firstClickIndicator(previous_letter_click)

@@ -198,7 +198,7 @@ def generate_dates(start_date, day):
 
 if __name__ == "__main__":
     nbr_day = 0
-    first_day = "13-10-2023"
+    first_day = "08-01-2023"
     day = 0
     while True:
         try:

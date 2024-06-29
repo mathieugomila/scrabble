@@ -22,14 +22,15 @@ let emoji_75_pourcent = "🤒🤒🤒";
 let emoji_noob = "🤣🤣👎👎🤣🤣"
 let emoji_default = "🥱🥱😐😐🥱🥱"
 
+let has_used_helper = false
 
 const colors = { ".": 'white', "3": "red", "2": "pink", "b": "cyan", "c": "blue" };
 
 const grid = document.getElementById('grid');
 
-load_button();
+load_buttons();
 
-function load_button() {
+function load_buttons() {
     document.getElementById("validateButton").addEventListener("click", async function () {
         if (current_score > 0) {
 
@@ -55,6 +56,10 @@ function load_button() {
 
             let text = `#SCRABBLEBLE jour n°${day_counter}\n\nScore: ${current_score} ${emoji}\n\nhttps://scrabble.pheargame.net`;
 
+            if (has_used_helper) {
+                text += "\n\nUSING HELP"
+            }
+
 
             try {
                 await navigator.clipboard.writeText(text);
@@ -66,6 +71,25 @@ function load_button() {
             }
         }
     });
+
+    document.getElementById("helperButton").addEventListener("click", async function () {
+        let today_word = best_score_possible_dict["word"];
+        let today_score = best_score_possible_dict["score"];
+        let today_best_word = best_score_possible_dict["best_word"];
+        let today_best_score = best_score_possible_dict["best_score"];
+
+        // Give some hint, just the first letter with ____ behind
+        let word_helper = today_word[0] + "*".repeat(today_word.length - 2) + today_word.slice(-1);
+        let best_word_helper = today_best_word[0] + "*".repeat(today_best_word.length - 2) + today_best_word.slice(-1);
+        // yesterday_word = daily_grid_json["yesterday"]["solution"]["word"]
+        // yesterday_score = daily_grid_json["yesterday"]["solution"]["score"]
+        // yesterday_best_word = daily_grid_json["yesterday"]["solution"]["best_word"]
+        // yesterday_best_score = daily_grid_json["yesterday"]["solution"]["best_score"]
+        let text = `INDICE : ${word_helper}[${today_score}] ou ${best_word_helper}[${today_best_score}]`;
+        has_used_helper = true;
+        document.getElementById("helperButton").firstChild.nodeValue = text;
+    }
+    );
 }
 
 function square_add_modified_letter(square, content) {
