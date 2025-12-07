@@ -4,7 +4,7 @@ from random import choice, randrange
 from unidecode import unidecode
 import json
 from numpyencoder import NumpyEncoder
-from path import Path
+from pathlib import Path
 
 
 class BagIsEmpty(Exception):
@@ -198,7 +198,7 @@ def generate_dates(start_date, day):
 
 if __name__ == "__main__":
     nbr_day = 0
-    first_day = "08-01-2023"
+    first_day = "07-12-2025"
     day = 0
     while True:
         try:
